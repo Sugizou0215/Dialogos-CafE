@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
     <%# テスト用 後で消すこと %>
     <% if user_signed_in? %>
       <li>
@@ -24,5 +25,6 @@
       </li>
     <% end %>
     <%= yield %>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
