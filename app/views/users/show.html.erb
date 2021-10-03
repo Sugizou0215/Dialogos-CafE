@@ -1,0 +1,18 @@
+<div class="container">
+  <div class='row'>
+    <div class='col-md-3'>
+      <h2>User info</h2>
+      <table class='table'>
+        <tr><%= attachment_image_tag(@user, :user_image_id, fallback: "no-image.jpg", size: "100x100") %></tr>
+        <tr>
+      	  <th>USER NAME</th>
+      	  <th><%= @user.name %></th>
+        </tr>
+        <tr>
+      	  <th>ABOUT</th>
+      	  <th><%= @user.introduction %></th>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
