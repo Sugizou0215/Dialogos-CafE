@@ -13,6 +13,10 @@ class User < ApplicationRecord
   has_many :followings, through: :relationships, source: :followed # フォローしている場合→follower_idをフォローしている人
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :reverse_of_relationships, source: :follower  # フォローされている場合→followed_idをフォローしている人
+  #DM機能用
+  has_many :entries
+  has_many :chats
+  has_many :rooms, through: :user_rooms
 
   #ユーザー画像用（refile）
   attachment :user_image
