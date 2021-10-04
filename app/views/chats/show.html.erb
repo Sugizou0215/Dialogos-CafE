@@ -1,16 +1,48 @@
-<h1 id="room" data-room="<%= @room.id %>" data-user="<%= current_user.id %>"><%= @user.name %> さんとのチャット</h1>
+<div class="container bg-light pt-3">
+  <h1 class="room text-center mb-3 pb-3 border-bottom border-dark"><%= @user.name %> さんとのチャット</h1>
+  <div class="col-6 mx-auto">
+    <div class="message">
+      <% @chats.each do |chat| %>
+        <!--自分のメッセージ-->
+        <% if chat.user_id == current_user.id %>
+          <tr class="row justify-content-center">
+            <!-- アイコンを右側に表示する -->
+            <td class="col-2">
+              <%= attachment_image_tag(current_user, :user_image, fallback: "no-image-icon.jpg", size: "50x50", class:"float-right rounded-circle profile-image align-top") %>
+            </td>
+            <!-- メッセージを左側に表示する -->
+            <td class="col-10">
+              <!-- 自分以外用の吹き出しCSSクラスを適用する -->
+              <div class="other-user-says mr-5 ml-5 mt-5">
+                <p><%= chat.message %></p>
+              </div>
+            </td>
+          </tr>
+        <% else %>
+          <tr class="row justify-content-center">
+            <!-- アイコンを左側に表示する -->
+            <td class="col-2">
+              <%= attachment_image_tag(chat.user, :user_image, fallback: "no-image.jpg", size: "50x50", class:"rounded-circle profile-image align-top") %>
+            </td>
+            <!-- メッセージを右側に表示する -->
+            <td class="col-10">
+              <!-- 自分用の吹き出しCSSクラスを適用する -->
+              <div class="says mx-5">
+                <p><%= chat.message %></p>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
-<div class="message" style="width: 400px;">
-  <% @chats.each do |chat| %>
-    <% if chat.user_id == current_user.id %>
-      <p style="text-align: right;"><%= chat.message %></p>
-    <% else %>
-      <p style="text-align: left;"><%= chat.message %></p>
-    <% end %>
+  <%= form_with model: @chat, local: true do |f| %>
+    <%= f.text_field :message %>
+    <%= f.hidden_field :room_id %>
+
+    <div class="form-group">
+      <%= f.submit "送信", class: 'btn btn-secondary' %>
+    </div>
   <% end %>
 </div>
-
-<%= form_with model: @chat, data: {remote: true} do |f| %>
-  <%= f.text_field :message %>
-  <%= f.hidden_field :room_id %>
-<% end %>
