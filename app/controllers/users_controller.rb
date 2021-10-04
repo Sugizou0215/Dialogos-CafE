@@ -19,7 +19,7 @@ class UsersController < ApplicationController
 
   #退会処理：ユーザーのis_validカラムをfalseに変更し、ログアウトさせる
   def leave
-    @user = current_customer
+    @user = current_user
     @user.update(is_valid: false)
     reset_session
     redirect_to root_path

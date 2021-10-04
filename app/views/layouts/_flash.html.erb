@@ -4,4 +4,10 @@
       <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-success mb-0") %>
     <% end %>
   </span>
+<% elsif flash[:error] %>
+  <span class="error">
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-danger mb-0") %>
+    <% end %>
+  </span>
 <% end %>
