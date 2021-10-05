@@ -16,6 +16,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @admin_user = User.find(@event.admin_user_id)
   end
 
   def index

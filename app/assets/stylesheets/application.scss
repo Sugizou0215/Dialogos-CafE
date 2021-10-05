@@ -30,7 +30,7 @@ body {
     height: 800px;
     text-align: center;
     color: white;
-    background-image: url("<%= asset_path('Top.jpg') %>");
+    background-image: image-url('Top.jpg');
     background-color: rgba(0,0,0,0.2);
     background-blend-mode: overlay;
     background-size: cover;
