@@ -12,7 +12,7 @@
       </div>
       <div class="form-group">
         <%= f.label :ジャンル選択 %>
-        <%= f.collection_select :@event.genre_id, Genre.all, :id, :name, include_blank: "選択して下さい", class: "form-control" %>
+        <%= f.collection_select :genre_id, Genre.all, :id, :name, include_blank: "選択して下さい", class: "form-control" %>
       </div>
       <div class="form-group">
         <%= f.label :開始日時 %>
@@ -36,8 +36,7 @@
       </div>
       <div class="form-group">
         <%= f.label :イベントイメージ %>
-        <!--エラーundefined method `event_image_attachment_definition' for nil:NilClass　意味不明。user/editでできているのになぜ？-->
-        <%#= f.attachment_field :event_image, class: "form-control-file event_image" %>
+        <%= f.attachment_field :event_image, class: "form-control-file event_image" %>
       </div>
       <!--ここにグループ選択-->
       <div class="form-group">

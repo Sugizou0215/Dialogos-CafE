@@ -6,6 +6,7 @@ class EventsController < ApplicationController
 
   def create
     @event = Event.new(event_params)
+    @event.admin_user_id = current_user.id
     if @event.save
       redirect_to events_path, notice: 'イベント作成に成功しました'
     else
@@ -14,10 +15,12 @@ class EventsController < ApplicationController
   end
 
   def show
+    @event = Event.find(params[:id])
   end
 
   def index
     @events = Event.all
+    @user = current_user #ユーザー情報表示用（サイドバー）
   end
 
   def edit

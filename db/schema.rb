@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_10_05_050913) do
     t.text "tool"
     t.boolean "is_valid", default: true
     t.string "event_image_id"
-    t.integer "admin_uesr_id"
+    t.integer "admin_user_id"
     t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

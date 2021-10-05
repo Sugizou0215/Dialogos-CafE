@@ -1,0 +1,28 @@
+<div class="container">
+  <div class='row'>
+    <%= render 'users/user_info',user: @user %>
+    <div class='col-9'>
+      <h2>イベント一覧</h2>
+      <div class="col-12">
+        <div class="card bg-light">
+          <div class="row no-gutters">
+            <% @events.each do |event| %>
+              <% if event.is_valid == true %>
+                <div class="col-2">
+                  <%= attachment_image_tag(event, :event_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
+                </div>
+                <div class="col-10">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= link_to event.name, event_path(event) %></h5>
+                    <p class="card-text"><%= event.introduction %></p>
+                    <td><%= event.start_at.strftime('%Y/%m/%d %H:%M') %>~<%= event.finish_at.strftime('%Y/%m/%d %H:%M') %></td>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
