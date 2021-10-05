@@ -8,8 +8,8 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = current_customer
-    if @user.update(customer_params)
+    @user = current_user
+    if @user.update(user_params)
       flash[:notice] = '登録情報を編集しました。'
       redirect_to user_path
     else
@@ -27,4 +27,10 @@ class UsersController < ApplicationController
 
   def confirm
   end
+
+  private
+
+    def user_params
+      params.require(:user).permit(:name, :introduction, :user_image)
+    end
 end

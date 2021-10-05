@@ -1,0 +1,48 @@
+<div class="container">
+  <div class ="row">
+    <h1>新規イベント作成</h1>
+    <%= form_with model:@event, local:true do |f| %>
+      <div class="form-group">
+        <%= f.label :イベント名 %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :イベント概要 %>
+        <%= f.text_field :introduction, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :ジャンル選択 %>
+        <%= f.collection_select :@event.genre_id, Genre.all, :id, :name, include_blank: "選択して下さい", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :開始日時 %>
+        <%= f.datetime_field :start_at, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :終了日時 %>
+        <%= f.datetime_field :finish_at, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :参加締め切り日時 %>
+        <%= f.datetime_field :deadline, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :参加定員 %>
+        <%= f.text_field :capacity, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :使用ツール %>
+        <%= f.text_field :tool, class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <%= f.label :イベントイメージ %>
+        <!--エラーundefined method `event_image_attachment_definition' for nil:NilClass　意味不明。user/editでできているのになぜ？-->
+        <%#= f.attachment_field :event_image, class: "form-control-file event_image" %>
+      </div>
+      <!--ここにグループ選択-->
+      <div class="form-group">
+        <%= f.submit class: 'btn btn-secondary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
