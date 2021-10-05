@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_04_113751) do
+ActiveRecord::Schema.define(version: 2021_10_05_050913) do
 
   create_table "chats", force: :cascade do |t|
     t.integer "user_id"
@@ -23,6 +23,29 @@ ActiveRecord::Schema.define(version: 2021_10_04_113751) do
   create_table "entries", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.text "introduction"
+    t.integer "genre_id"
+    t.datetime "start_at"
+    t.datetime "finish_at"
+    t.datetime "deadline"
+    t.integer "capacity"
+    t.text "tool"
+    t.boolean "is_valid", default: true
+    t.string "event_image_id"
+    t.integer "admin_uesr_id"
+    t.integer "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
