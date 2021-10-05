@@ -1,7 +1,7 @@
 <div class="container bg-light pt-3">
   <h1 class="room text-center mb-3 pb-3 border-bottom border-dark"><%= @user.name %> さんとのチャット</h1>
   <div class="col-6 mx-auto">
-    <div class="message">
+    <div class="message mb-3">
       <% @chats.each do |chat| %>
         <!--自分のメッセージ-->
         <% if chat.user_id == current_user.id %>
@@ -14,7 +14,8 @@
             <td class="col-10">
               <!-- 自分以外用の吹き出しCSSクラスを適用する -->
               <div class="other-user-says mr-5 ml-5 mt-5">
-                <p><%= chat.message %></p>
+                <h5><%= chat.message %></h5>
+                <p class="text-right mb-0"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></p>
               </div>
             </td>
           </tr>
@@ -29,6 +30,7 @@
               <!-- 自分用の吹き出しCSSクラスを適用する -->
               <div class="says mx-5">
                 <p><%= chat.message %></p>
+                <p class="text-right mb-0"><%= chat.created_at.strftime('%Y/%m/%d %H:%M') %></p>
               </div>
             </td>
           </tr>
@@ -36,13 +38,13 @@
       <% end %>
     </div>
   </div>
-
-  <%= form_with model: @chat, local: true do |f| %>
-    <%= f.text_field :message %>
-    <%= f.hidden_field :room_id %>
-
-    <div class="form-group">
-      <%= f.submit "送信", class: 'btn btn-secondary' %>
-    </div>
-  <% end %>
+  <div class="form-group row justify-content-center border-top pt-2">
+    <%= form_with model: @chat, local: true, class:"form-inline" do |f| %>
+      <%= f.text_field :message %>
+      <%= f.hidden_field :room_id %>
+      <div>
+        <%= f.submit "送信", class: 'btn btn-secondary ml-2' %>
+      </div>
+    <% end %>
+  </div>
 </div>
