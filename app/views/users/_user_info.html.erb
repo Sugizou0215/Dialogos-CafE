@@ -1,9 +1,10 @@
-<div class='col-md-3'>
-  <h2>User info</h2>
+<div class='col-md-3 mt-3 border rounded bg-light'>
   <table class='table'>
-    <tr><%= attachment_image_tag(user, :user_image, fallback: "no-image.jpg", size: "100x100", class:"rounded-circle") %></tr>
+      <div class="text-center">
+        <%= attachment_image_tag(user, :user_image, fallback: "no-image.jpg", size: "100x100", class:"rounded-circle mt-3 mb-3") %>
+      </div>
     <tr>
-  	  <th>USER NAME</th>
+  	  <th>ユーザー名</th>
   	  <th><%= user.name %></th>
     </tr>
     <tr>
@@ -19,8 +20,8 @@
       <th><%= link_to user.followers.count, user_followers_path(user.id) %></th>
     </tr>
   </table>
-  <div class='row mt-3'>
-    <%= link_to '', edit_user_path(user), class: "btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
+  <div class='row mt-3 justify-content-center'>
+    <%= link_to '', edit_user_path(user), class: "col-10 btn btn-outline-secondary btn-block fas fa-user-cog edit_user_#{user.id}" %>
   </div>
   <% if current_user != user %>
     <% if current_user.following?(user) %>

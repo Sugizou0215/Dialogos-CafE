@@ -15,7 +15,7 @@
                   <div class="card-body">
                     <h5 class="card-title"><%= link_to event.name, event_path(event) %></h5>
                     <p class="card-text"><%= event.introduction %></p>
-                    <td><%= event.start_at.strftime('%Y/%m/%d %H:%M') %>~<%= event.finish_at.strftime('%Y/%m/%d %H:%M') %></td>
+                    <td><%= event_time(event) %></td>
                   </div>
                 </div>
               <% end %>

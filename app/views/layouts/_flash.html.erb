@@ -1,13 +1,13 @@
 <% if flash[:notice] %>
-  <span class="flash">
+  <span class="flash text-light">
     <% flash.each do |message_type, message| %>
-      <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-success mb-0") %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-success mb-0 rounded-0" ) %>
     <% end %>
   </span>
 <% elsif flash[:error] %>
-  <span class="error">
+  <span class="error text-light">
     <% flash.each do |message_type, message| %>
-      <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-danger mb-0") %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type} bg-danger mb-0 rounded-0") %>
     <% end %>
   </span>
 <% end %>
