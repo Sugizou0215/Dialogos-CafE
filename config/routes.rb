@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     get "followers" => 'relationships#followers', as: 'followers'
   end
   resources :chats, only: [:show, :create]
-  resources :events, except: [:destroy]
   patch "events/:id/cancel" => "events#cancel", as: 'cancel_event'
+  resources :events, except: [:destroy] do
+    get "join" => "events#join", as: 'join'
+    delete "leave" => "events#leave", as: 'leave'
+  end
+
 end

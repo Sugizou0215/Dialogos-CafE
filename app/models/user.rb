@@ -17,6 +17,9 @@ class User < ApplicationRecord
   has_many :entries
   has_many :chats
   has_many :rooms, through: :user_rooms
+  #イベント機能用
+  has_many :event_users
+  has_many :events, through: :event_users
 
   #ユーザー画像用（refile）
   attachment :user_image

@@ -1,4 +1,7 @@
 class EventsController < ApplicationController
+
+  before_action :authenticate_user!, except: [:index]
+
   def new
     @genres = Genre.all #ジャンル表示用
     @event = Event.new
@@ -7,6 +10,7 @@ class EventsController < ApplicationController
   def create
     @event = Event.new(event_params)
     @event.admin_user_id = current_user.id
+    @event.users << current_user
     if @event.save
       redirect_to events_path, notice: 'イベント作成に成功しました'
     else
@@ -36,6 +40,7 @@ class EventsController < ApplicationController
     end
   end
 
+  #イベントの開催を中止または中止から再開する処理
   def cancel
     @event = Event.find(params[:id])
     #イベントが開催中の場合
@@ -50,6 +55,21 @@ class EventsController < ApplicationController
       @admin_user = User.find(@event.admin_user_id)
       redirect_to event_path(@event)
   end
+
+  #イベントに参加する際の処理
+  def join
+    @event = Event.find(params[:event_id])
+    @event.users << current_user
+    redirect_to event_path(@event)
+  end
+
+  #イベント参加を中止する際の処理
+  def leave
+    @event = Event.find(params[:event_id])
+    @event.users.delete(current_user)
+    redirect_to event_path(@event)
+  end
+
 
   private
 

@@ -2,16 +2,17 @@
   <div class ="row">
     <h2>
       イベント詳細
-      <% if @event.deadline < Time.now %>
-        <small>
+      <small>
+        <% if @event.deadline < Time.now %>
           <i class="fas fa-exclamation-circle"></i>このイベントはすでに参加が締め切られています。
-        </small>
-      <% elsif @event.is_valid == false %>
-        <small>
+        <% elsif @event.is_valid == false %>
           <i class="fas fa-exclamation-circle"></i>このイベントの開催は中止されています。
-        </small>
-      <!--ここに定員オーバー-->
-      <% end %>
+        <% elsif @event.users.count == @event.capacity %>
+          <i class="fas fa-exclamation-circle"></i>このイベントはすでに定員に達しています。
+        <% elsif @event.users.include?(current_user) %>
+          <i class="fas fa-exclamation-circle"></i>このイベントに参加予定です。
+        <% end %>
+      </small>
     </h2>
     <table class="col-10 table table-striped table-condensed">
       <tr>
@@ -34,8 +35,7 @@
       </tr>
       <tr>
         <td>参加定員</td>
-        <!--現在の参加人数を表示できるようにすること-->
-        <td><%= @event.capacity %></td>
+        <td><%= @event.capacity %>(現在<%= @event.users.count %>人が参加中)</td>
       </tr>
       <tr>
         <td>使用ツール</td>
@@ -54,7 +54,13 @@
         <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
       <% end %>
     <% else %>
-      <!--ここに参加するボタン-->
+      <% if @event.users.include?(current_user) %>
+        <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
+      <% else %>
+        <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count == @event.capacity %>
+          <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+        <% end %>
+      <% end %>
     <% end %>
   </div>
 </div>
