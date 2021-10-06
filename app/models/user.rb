@@ -19,7 +19,8 @@ class User < ApplicationRecord
   has_many :rooms, through: :user_rooms
   #イベント機能用
   has_many :event_users
-  has_many :events, through: :event_users
+  has_many :events, through: :event_users, dependent: :destroy
+  has_many :event_comments, dependent: :destroy
 
   #ユーザー画像用（refile）
   attachment :user_image

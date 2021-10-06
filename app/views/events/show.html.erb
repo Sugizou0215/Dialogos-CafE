@@ -45,6 +45,16 @@
         <td>イベント主催者</td>
         <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
       </tr>
+      <% if @admin_user == current_user %>
+        <tr>
+          <td>イベント参加者</td>
+          <td>
+            <% @event.users.each do |member| %>
+              <li><%= link_to member.name, user_path(member) %><br></li>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
     </table>
     <% if @admin_user == current_user %>
       <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
@@ -62,5 +72,28 @@
         <% end %>
       <% end %>
     <% end %>
+  </div>
+  <div class="row">
+    <h2>コメント</h2>
+    <table class ="table">
+      <tbody class="bg-light">
+        <% @event.event_comments.each do |event_comment| %>
+          <tr>
+            <td>
+              <%= attachment_image_tag(event_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
+            </td>
+            <td><%= event_comment.user.name %></td>
+            <td><%= event_comment.created_at.strftime('%Y/%m/%d') %></td>
+            <td><%= event_comment.comment %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="form-group col-12">
+      <%= form_with(model:[@event, @event_comment], local: true) do |f| %>
+        <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
+        <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
+      <% end %>
+    </div>
   </div>
 </div>
