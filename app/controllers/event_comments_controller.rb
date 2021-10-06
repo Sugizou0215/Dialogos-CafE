@@ -8,6 +8,8 @@ class EventCommentsController < ApplicationController
   end
 
   def destroy
+    Event.find_by(id: params[:id]).destroy
+    redirect_to event_path(params[:event_id])
   end
 
   private

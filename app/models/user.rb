@@ -20,7 +20,10 @@ class User < ApplicationRecord
   #イベント機能用
   has_many :event_users
   has_many :events, through: :event_users, dependent: :destroy
+  #イベントコメント用
   has_many :event_comments, dependent: :destroy
+  #イベントブックマーク用
+  has_many :bookmarks, dependent: :destroy
 
   #ユーザー画像用（refile）
   attachment :user_image

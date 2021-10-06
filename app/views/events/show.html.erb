@@ -1,6 +1,6 @@
 <div class="container">
   <div class ="row">
-    <h2>
+    <h2 class="col-10">
       イベント詳細
       <small>
         <% if @event.deadline < Time.now %>
@@ -14,6 +14,17 @@
         <% end %>
       </small>
     </h2>
+    <h4 class="text-right col-2">
+      <% if @event.bookmark_by?(current_user) %>
+        <%= link_to event_bookmarks_path(@event), method: :delete do %>
+          <i class="fas fa-bookmark"></i></i><%= @event.bookmarks.count %>
+        <% end %>
+      <% else %>
+        <%= link_to event_bookmarks_path(@event), method: :post do %>
+          <i class="far fa-bookmark"></i></i><%= @event.bookmarks.count %>
+        <% end %>
+      <% end %>
+    </h4>
     <table class="col-10 table table-striped table-condensed">
       <tr>
         <td>
@@ -35,7 +46,7 @@
       </tr>
       <tr>
         <td>参加定員</td>
-        <td><%= @event.capacity %>(現在<%= @event.users.count %>人が参加中)</td>
+        <td><%= @event.capacity %>人(現在<%= @event.users.count %>人が参加中)</td>
       </tr>
       <tr>
         <td>使用ツール</td>
@@ -54,7 +65,7 @@
             <% end %>
           </td>
         </tr>
-      <% end %>
+       <% end %>
     </table>
     <% if @admin_user == current_user %>
       <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
@@ -85,6 +96,11 @@
             <td><%= event_comment.user.name %></td>
             <td><%= event_comment.created_at.strftime('%Y/%m/%d') %></td>
             <td><%= event_comment.comment %></td>
+            <% if event_comment.user == current_user %>
+              <td>
+                <%= link_to "削除", event_event_comment_path(event_comment.event, event_comment), method: :delete %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
