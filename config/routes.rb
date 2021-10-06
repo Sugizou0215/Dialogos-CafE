@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :events, except: [:destroy] do
     get "join" => "events#join", as: 'join'
     delete "leave" => "events#leave", as: 'leave'
+    resources :event_comments, only: [:create, :destroy]
   end
 
 end
