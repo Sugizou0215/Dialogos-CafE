@@ -25,9 +25,30 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @event = Event.find(params[:id])
   end
 
   def update
+    if @event = Event.update(event_params)
+      redirect_to event_path(@event), notice: "正常にイベント情報が変更されました。"
+    else
+      render "edit"
+    end
+  end
+
+  def cancel
+    @event = Event.find(params[:id])
+    #イベントが開催中の場合
+    if @event.is_valid == true
+      @event.update(is_valid: false)
+      flash[:notice] = 'イベントを中止しました。イベント詳細ページから再開も可能です。'
+    #イベントが中止中の場合
+    else
+      @event.update(is_valid: true)
+      flash[:notice] = 'イベントを再開しました。'
+    end
+      @admin_user = User.find(@event.admin_user_id)
+      redirect_to event_path(@event)
   end
 
   private

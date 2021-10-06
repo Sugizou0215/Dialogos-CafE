@@ -4,11 +4,11 @@
       イベント詳細
       <% if @event.deadline < Time.now %>
         <small>
-          このイベントはすでに参加が締め切られています。
+          <i class="fas fa-exclamation-circle"></i>このイベントはすでに参加が締め切られています。
         </small>
       <% elsif @event.is_valid == false %>
         <small>
-          このイベントの開催は中止されました。
+          <i class="fas fa-exclamation-circle"></i>このイベントの開催は中止されています。
         </small>
       <!--ここに定員オーバー-->
       <% end %>
@@ -43,8 +43,18 @@
       </tr>
       <tr>
         <td>イベント主催者</td>
-        <td><%= @admin_user %></td>
+        <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
       </tr>
     </table>
+    <% if @admin_user == current_user %>
+      <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
+      <% if @event.is_valid == true %>
+        <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
+      <% else %>
+        <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
+      <% end %>
+    <% else %>
+      <!--ここに参加するボタン-->
+    <% end %>
   </div>
 </div>

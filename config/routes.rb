@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   end
   resources :chats, only: [:show, :create]
   resources :events, except: [:destroy]
+  patch "events/:id/cancel" => "events#cancel", as: 'cancel_event'
 end
