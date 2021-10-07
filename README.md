@@ -89,5 +89,5 @@ https://docs.google.com/spreadsheets/d/1OP27-d-X4fr8f_eum9bJoVdwDidfamibFE2mGJpA
 
 ## 使用素材
 - Pixabay（https://pixabay.com/ja/） : 各種画像素材
-- Google Fonts(https://fonts.google.com/) : フォント
-- Hipster Logo Generator(https://hipsterlogogenerator.com) : ロゴ作成
+- Google Fonts（https://fonts.google.com/） : フォント
+- Hipster Logo Generator（https://hipsterlogogenerator.com） : ロゴ作成
