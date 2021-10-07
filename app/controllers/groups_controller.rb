@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @admin_user = User.find(@group.admin_user_id)
+    @apply = Apply.find_by(group_id: @group.id, user_id: current_user.id)
   end
 
   def index
@@ -34,6 +35,23 @@ class GroupsController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def join
+    @group = Group.find(params[:group_id])
+    @apply = Apply.find_by(params[:group_id], params[:user_id])
+    @group.users << User.find(params[:user_id])
+    @apply.destroy!
+    flash[:notice] = '参加を承認しました。'
+    redirect_to  group_path(@group)
+  end
+
+  def leave
+    @apply = Apply.find_by(params[:group_id], params[:user_id])
+    binding.pry
+    @apply.destroy!
+    flash[:notice] = '申請を却下しました。。'
+    redirect_to groups_path
   end
 
   private

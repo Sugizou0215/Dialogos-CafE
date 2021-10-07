@@ -1,0 +1,13 @@
+<div class="container applicant-wrapper">
+  <h3>承認待ちユーザ一覧</h3>
+  <div class="row">
+    <% @applies.each do |app| %>
+      <div class="col-6">
+      <%= link_to app.user.name, user_path(app.user), class:"user-icon" %>
+      <%= link_to "承認", group_join_path(app.group, user_id: app.user_id), method: :get, class:"btn btn-success" %>
+      <%= link_to "却下", group_leave_path(app.group, user_id: app.user_id), method: :delete, class:"btn btn-danger" %>
+        <br>
+      </div>
+    <% end %>
+    </div>
+</div>
