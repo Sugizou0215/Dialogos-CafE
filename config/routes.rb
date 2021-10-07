@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     resources :event_comments, only: [:create, :destroy]
     resource :bookmarks, only: [:create, :destroy]
   end
-  resources :groups, except: [:destroy]
+  resources :groups, except: [:destroy] do
+    get "join" => "groups#join", as: 'join'
+    delete "leave" => "groups#leave", as: 'leave'
+    resources :applies, only: [:create, :destroy, :index]
+  end
 
 end
