@@ -1,5 +1,9 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-0 pb-0">
+  <% if current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0">
+  <% else %>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 bg-dark">
+  <% end %>
     <div class="container-fluid">
       <a class="navbar-brand" href="/"><span><%= image_tag 'logo1_negate.png', size: "100x85" %></span></a>
       <!--ハンバーガーメニュー-->
