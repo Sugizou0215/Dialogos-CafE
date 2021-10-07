@@ -1,7 +1,7 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/"><span>DialogosCafe</span></a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-0 pb-0">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/"><span><%= image_tag 'logo1_negate.png', size: "100x85" %></span></a>
       <!--ハンバーガーメニュー-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,7 +10,7 @@
         <ul class="navbar-nav ml-auto">
         <% if user_signed_in? %>
           <li><%= link_to ' マイページ',user_path(current_user),class: 'fas fa-home nav-link text-light' %></li>
-          <li><%#= link_to ' Users',users_path,class: 'fas fa-users nav-link text-light' %></li>
+          <li><%= link_to ' グループ一覧',groups_path,class: 'fas fa-users nav-link text-light' %></li>
           <li><%= link_to ' イベント一覧',events_path ,class: 'fas fa-comments nav-link text-light'%></li>
           <li><%= link_to ' ログアウト', destroy_user_session_path, method: :delete,class: 'fas fa-sign-out-alt nav-link text-light' %></li>
         <% else %>
