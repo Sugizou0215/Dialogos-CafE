@@ -16,18 +16,20 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @admin_user = User.find(@group.admin_user_id)
   end
 
   def index
     @groups = Group.all
+    @user = current_user #ユーザー情報表示用（サイドバー）
   end
 
   def edit
-    @group = Group.find(params:[id])
+    @group = Group.find(params[:id])
   end
 
   def update
-    if @group = Group.update(event_params)
+    if @group = Group.update(group_params)
       redirect_to group_path(@group), notice: "正常にイベント情報が変更されました。"
     else
       render "edit"

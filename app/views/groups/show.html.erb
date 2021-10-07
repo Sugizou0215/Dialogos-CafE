@@ -1,0 +1,42 @@
+<div class="container">
+  <div class ="row">
+    <h2 class="col-10">
+      グループ詳細
+    </h2>
+    <table class="col-10 table table-striped table-condensed">
+      <tr>
+        <td>
+          <%= attachment_image_tag(@gourp, :group_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>グループ名</td>
+        <td><%= @group.name %></td>
+      </tr>
+      <tr>
+        <td>グループ概要</td>
+        <td><%= @group.introduction %></td>
+      </tr>
+      <tr>
+        <td>グループ主催者</td>
+        <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
+      </tr>
+      <% if @admin_user == current_user %>
+        <tr>
+          <td>グループメンバー</td>
+          <td>
+            <% @group.users.each do |member| %>
+              <li><%= link_to member.name, user_path(member) %><br></li>
+            <% end %>
+          </td>
+        </tr>
+       <% end %>
+    </table>
+    <% if @admin_user == current_user %>
+      <%= link_to '編集する', edit_group_path, class: 'btn btn-info' %></br>
+    <% else %>
+      <!--ここに参加ボタン-->
+    <% end %>
+  </div>
+</div>
