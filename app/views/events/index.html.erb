@@ -1,40 +1,37 @@
 <div class="container">
   <div class='row'>
     <%= render 'users/user_info',user: @user %>
-    <div class='col-9'>
+    <div class='col-9 mt-2'>
       <h2>イベント一覧</h2>
-      <div class="col-12">
-        <div class="card bg-light">
-          <div class="row no-gutters">
-            <% @events.each do |event| %>
-              <% if event.is_valid == true %>
-                <div class="col-2">
-                  <%= attachment_image_tag(event, :event_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
-                </div>
-                <div class="col-10">
-                  <div class="card-body">
-                    <h5 class="card-title"><%= link_to event.name, event_path(event) %></h5>
-                    <p class="card-text"><%= event.introduction %></p>
-                    <td><%= event_time(event) %></td>
-                  </div>
-                </div>
-              <% end %>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#tab1" class="nav-link active" data-toggle="tab">カレンダー</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tab2" class="nav-link" data-toggle="tab">一覧</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <div id="tab1" class="tab-pane active">
+          <p id="notice"><%= notice %></p>
+
+          <h1>イベントカレンダー</h1>
+          <%= month_calendar events: @events do |date, events| %>
+            <%= date.day %>
+
+            <% events.each do |event| %>
+              <div>
+                <%= link_to event.name, event_path(event) %>
+              </div>
             <% end %>
+          <% end %>
+        </div>
+        <div id="tab2" class="tab-pane">
+          <div class="col-12 mt-2">
+            <%= render 'index',events: @events %>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <p id="notice"><%= notice %></p>
-
-    <h1>イベントカレンダー</h1>
-    <%= month_calendar events: @events do |date, events| %>
-      <%= date.day %>
-
-      <% events.each do |event| %>
-        <div>
-          <%= link_to event.name, event_path(event) %>
-        </div>
-      <% end %>
-    <% end %>
 </div>
