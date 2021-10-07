@@ -24,6 +24,9 @@ class User < ApplicationRecord
   has_many :event_comments, dependent: :destroy
   #イベントブックマーク用
   has_many :bookmarks, dependent: :destroy
+  #グループ
+  has_many :group_users
+  has_many :groups, through: :group_users
 
   #ユーザー画像用（refile）
   attachment :user_image
