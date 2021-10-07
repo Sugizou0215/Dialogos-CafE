@@ -37,6 +37,7 @@ class GroupsController < ApplicationController
     end
   end
 
+  #参加申請を許可すると、GroupUserレコードを生成し、該当のapplyレコードを削除する
   def join
     @group = Group.find(params[:group_id])
     @apply = Apply.find_by(params[:group_id], params[:user_id])
@@ -46,9 +47,9 @@ class GroupsController < ApplicationController
     redirect_to  group_path(@group)
   end
 
+  #参加申請を却下すると、該当のapplyレコードを削除する
   def leave
     @apply = Apply.find_by(params[:group_id], params[:user_id])
-    binding.pry
     @apply.destroy!
     flash[:notice] = '申請を却下しました。。'
     redirect_to groups_path
