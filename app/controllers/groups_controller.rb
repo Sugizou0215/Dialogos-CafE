@@ -18,6 +18,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @admin_user = User.find(@group.admin_user_id)
     @apply = Apply.find_by(group_id: @group.id, user_id: current_user.id)
+    @group_news = GroupNew.where(group_id: @group.id)
   end
 
   def index
