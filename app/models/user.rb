@@ -30,6 +30,8 @@ class User < ApplicationRecord
   #グループ承認機能用
   has_many :applies, dependent: :destroy
   has_many :groups, through: :applies
+  #グループコメント機能用
+  has_many :group_comments, dependent: :destroy
 
   #ユーザー画像用（refile）
   attachment :user_image

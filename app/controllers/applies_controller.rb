@@ -1,4 +1,6 @@
 class AppliesController < ApplicationController
+  
+  before_action :authenticate_user!
 
   def create
     current_user.applies.create(group_id: apply_params[:group_id])

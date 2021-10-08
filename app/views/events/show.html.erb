@@ -7,7 +7,7 @@
           <i class="fas fa-exclamation-circle"></i>このイベントはすでに参加が締め切られています。
         <% elsif @event.is_valid == false %>
           <i class="fas fa-exclamation-circle"></i>このイベントの開催は中止されています。
-        <% elsif @event.users.count == @event.capacity %>
+        <% elsif @event.users.count >= @event.capacity %>
           <i class="fas fa-exclamation-circle"></i>このイベントはすでに定員に達しています。
         <% elsif @event.users.include?(current_user) %>
           <i class="fas fa-exclamation-circle"></i>このイベントに参加予定です。
@@ -67,19 +67,23 @@
         </tr>
        <% end %>
     </table>
-    <% if @admin_user == current_user %>
-      <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
-      <% if @event.is_valid == true %>
-        <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
+    <% if user_signed_in? %>
+      <% if @admin_user == current_user %>
+        <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
+        <% if @event.is_valid == true %>
+          <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
+        <% else %>
+          <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
+        <% end %>
       <% else %>
-        <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
-      <% end %>
-    <% else %>
-      <% if @event.users.include?(current_user) %>
-        <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
-      <% else %>
-        <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count == @event.capacity %>
-          <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+        <% if @event.users.include?(current_user) %>
+          <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
+        <% else %>
+          <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count >= @event.capacity %>
+            <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+          <% else %>
+            <p><i class="fas fa-exclamation-circle"></i>このイベントには参加できません。</p>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

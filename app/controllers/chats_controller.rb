@@ -1,4 +1,7 @@
 class ChatsController < ApplicationController
+  
+  before_action :authenticate_user!
+  
   def show
     @user = User.find(params[:id])
     current_user_entries = current_user.entries.pluck(:room_id)

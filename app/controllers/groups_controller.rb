@@ -1,4 +1,7 @@
 class GroupsController < ApplicationController
+  
+  before_action :authenticate_user!, except: [:index]
+  
   def new
     @group = Group.new
   end
@@ -19,6 +22,7 @@ class GroupsController < ApplicationController
     @admin_user = User.find(@group.admin_user_id)
     @apply = Apply.find_by(group_id: @group.id, user_id: current_user.id)
     @group_news = GroupNew.where(group_id: @group.id)
+    @group_comment = GroupComment.new
   end
 
   def index

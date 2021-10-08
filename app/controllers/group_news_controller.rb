@@ -1,4 +1,7 @@
 class GroupNewsController < ApplicationController
+  
+  before_action :authenticate_user!, except: [:index]
+
   def new
     @group_new = GroupNew.new
   end
