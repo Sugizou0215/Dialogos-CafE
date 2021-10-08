@@ -1,7 +1,8 @@
 class GroupsController < ApplicationController
-  
+
   before_action :authenticate_user!, except: [:index]
-  
+  before_action :ensure_admin_user, only: [:edit, :update] #主催者以外はedit,updateできなくする
+
   def new
     @group = Group.new
   end
@@ -64,5 +65,12 @@ class GroupsController < ApplicationController
 
     def group_params
       params.require(:group).permit(:name, :introduction, :group_image)
+    end
+
+    def ensure_admin_user
+      @group = Group.find(params[:id])
+      unless @group.admin_user_id == current_user.id
+        redirect_to group_path(@group)
+      end
     end
 end

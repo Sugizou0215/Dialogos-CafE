@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index]
+  before_action :ensure_admin_user, only: [:edit, :update] #主催者以外はedit,updateできなくする
 
   def new
     @genres = Genre.all #ジャンル表示用
@@ -75,6 +76,13 @@ class EventsController < ApplicationController
 
     def event_params
       params.require(:event).permit(:name, :introduction, :genre_id, :start_at, :finish_at, :deadline, :tool, :event_image, :capacity, :group_id)
+    end
+
+    def ensure_admin_user
+      @event = Event.find(params[:id])
+      unless @event.admin_user_id == current_user.id
+        redirect_to event_path(@event)
+      end
     end
 
 end

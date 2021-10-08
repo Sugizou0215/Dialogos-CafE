@@ -1,15 +1,18 @@
-<div class="container mt-5">
-  <div class="text-center col-12">
-    <div class="col-12">
-      <h3 class="text-danger"><i class="fas fa-exclamation-triangle"></i>本当に退会しますか？<i class="fas fa-exclamation-triangle"></i></h3><br><br>
-    </div>
-    <div class="col-12">
-      退会すると会員情報やこれまでのイベント参加履歴等が閲覧できなくなります。<br>
-      ご注意ください。<br>
-      退会する場合は,「退会する」をクリックしてください。<br><br>
-    </div>
-    <div class="col-12 mb-5">
-      <%= link_to "退会しない", user_path(current_user), class: 'btn btn-primary' %>
-      <%= link_to "退会する", users_leave_path(current_user), data: {confirm: "本当に退会してもよろしいですか？"}, method: :put, class: "btn btn-danger" %>
+<section id="user" class="bg-light">
+  <div class="container pt-5">
+    <div class="text-center col-12">
+      <div class="col-12">
+        <h3 class="text-danger"><i class="fas fa-exclamation-triangle"></i>本当に退会しますか？<i class="fas fa-exclamation-triangle"></i></h3><br><br>
+      </div>
+      <div class="col-12">
+        退会すると会員情報やこれまでのイベント参加履歴等が閲覧できなくなります。<br>
+        ご注意ください。<br>
+        退会する場合は,「退会する」をクリックしてください。<br><br>
+      </div>
+      <div class="col-12 pb-5">
+        <%= link_to "退会しない", user_path(current_user), class: 'btn btn-primary' %>
+        <%= link_to "退会する", users_leave_path(current_user), data: {confirm: "本当に退会してもよろしいですか？"}, method: :put, class: "btn btn-danger" %>
+      </div>
     </div>
   </div>
+</section>

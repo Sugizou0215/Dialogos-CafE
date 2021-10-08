@@ -2,6 +2,11 @@
   <div class ="row">
     <h2 class="col-10">
       グループ詳細
+      <% if @apply %>
+        <small>
+          <i class="fas fa-exclamation-circle"></i>現在、このグループに参加申請中です。
+        </small>
+      <% end %>
     </h2>
     <table class="col-12 table table-striped table-condensed">
       <tr>
@@ -68,7 +73,7 @@
       <% end %>
     </div>
   </div>
-  <div class="row">
+  <div class="row col-12">
     <h2>コメント</h2>
     <table class ="table">
       <tbody class="bg-light">
