@@ -26,5 +26,6 @@ Rails.application.routes.draw do
     delete "leave" => "groups#leave", as: 'leave'
     resources :applies, only: [:create, :destroy, :index]
     resources :group_news, only: [:new, :create, :edit, :update, :destroy]
+    resources :group_comments, only: [:create, :destroy]
   end
 end
