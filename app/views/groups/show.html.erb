@@ -3,9 +3,9 @@
     <h2 class="col-10">
       グループ詳細
     </h2>
-    <table class="col-10 table table-striped table-condensed">
+    <table class="col-12 table table-striped table-condensed">
       <tr>
-        <td>
+        <td class="col-3">
           <%= attachment_image_tag(@group, :group_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
         </td>
         <td></td>
@@ -49,5 +49,23 @@
         <% end %>
       <% end %>
     <% end %>
+    <div class="col-12">
+      <h2>お知らせ</h2>
+      <% @group_news.each do |group_new| %>
+        <div class="card bg-light mb-2">
+          <div class="card-body">
+          <h5 class="card-title"><%= group_new.title %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
+          <p class="card-text"><%= group_new.body %></p>
+          <% if @admin_user == current_user %>
+            <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
+            <%= link_to '削除', group_group_news_path(id: group_new.id, group_id: @group.id), data: {confirm: "本当に削除してもよろしいですか？"}, method: :delete, class:"btn btn-danger" %>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @admin_user == current_user %>
+        <%= link_to 'お知らせを投稿する', new_group_group_news_path(@group), class:"btn btn-info" %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -25,6 +25,6 @@ Rails.application.routes.draw do
     get "join" => "groups#join", as: 'join'
     delete "leave" => "groups#leave", as: 'leave'
     resources :applies, only: [:create, :destroy, :index]
+    resources :group_news, only: [:new, :create, :edit, :update, :destroy]
   end
-
 end
