@@ -1,6 +1,7 @@
+<section id="event" class="bg-light">
 <div class="container">
-  <div class ="row">
-    <h2 class="col-10">
+<div class ="row pt-3">
+    <h2 class="col-11">
       イベント詳細
       <small>
         <% if @event.deadline < Time.now %>
@@ -14,7 +15,7 @@
         <% end %>
       </small>
     </h2>
-    <h4 class="text-right col-2">
+    <h4 class="text-right col-1">
       <% if @event.bookmark_by?(current_user) %>
         <%= link_to event_bookmarks_path(@event), method: :delete do %>
           <i class="fas fa-bookmark"></i></i><%= @event.bookmarks.count %>
@@ -25,7 +26,7 @@
         <% end %>
       <% end %>
     </h4>
-    <table class="col-10 table table-striped table-condensed">
+    <table class="col-12 table table-striped table-condensed">
       <tr>
         <td>
           <%= attachment_image_tag(@event, :event_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
@@ -67,26 +68,28 @@
         </tr>
        <% end %>
     </table>
-    <% if user_signed_in? %>
-      <% if @admin_user == current_user %>
-        <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %></br>
-        <% if @event.is_valid == true %>
-          <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
-        <% else %>
-          <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
-        <% end %>
-      <% else %>
-        <% if @event.users.include?(current_user) %>
-          <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
-        <% else %>
-          <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count >= @event.capacity %>
-            <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+    <div class="mx-auto">
+      <% if user_signed_in? %>
+        <% if @admin_user == current_user %>
+          <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %>
+          <% if @event.is_valid == true %>
+            <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
           <% else %>
-            <p><i class="fas fa-exclamation-circle"></i>このイベントには参加できません。</p>
+            <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
+          <% end %>
+        <% else %>
+          <% if @event.users.include?(current_user) %>
+            <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
+          <% else %>
+            <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count >= @event.capacity %>
+              <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+            <% else %>
+              <p><i class="fas fa-exclamation-circle"></i>このイベントには参加できません。</p>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
   <div class="row">
     <h2>コメント</h2>
@@ -117,3 +120,4 @@
     </div>
   </div>
 </div>
+</section>
