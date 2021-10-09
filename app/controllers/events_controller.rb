@@ -41,7 +41,7 @@ class EventsController < ApplicationController
 
   def update
     @event = Event.find(params[:id])
-    if @event.update(event_params)
+    if vent.update(event_params)
       tag_list = params[:event][:tag_name].split(' ') # 入力されたタグを受け取る
       @old_tagmaps=Tagmap.where(event_id: @event.id) #編集しようとしているイベントに紐づいていた中間テーブルを@old_tagmapsに入れる
       #この時点で一旦中間テーブルのデータ消す
