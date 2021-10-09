@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_094903) do
+ActiveRecord::Schema.define(version: 2021_10_09_080620) do
 
   create_table "applies", force: :cascade do |t|
     t.integer "user_id"
@@ -125,6 +125,21 @@ ActiveRecord::Schema.define(version: 2021_10_08_094903) do
   end
 
   create_table "rooms", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tagmaps", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_tagmaps_on_event_id"
+    t.index ["tag_id"], name: "index_tagmaps_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

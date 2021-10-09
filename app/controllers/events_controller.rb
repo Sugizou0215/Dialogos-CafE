@@ -12,7 +12,9 @@ class EventsController < ApplicationController
     @event = Event.new(event_params)
     @event.admin_user_id = current_user.id
     @event.users << current_user
+    tag_list = params[:event][:tag_name].split(nil) #タグ機能用
     if @event.save
+      @event.save_tag(tag_list) 
       redirect_to events_path, notice: 'イベント作成に成功しました'
     else
       render :new
@@ -23,6 +25,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @admin_user = User.find(@event.admin_user_id)
     @event_comment = EventComment.new
+    @event_tags = @event.tags #タグ機能用
   end
 
   def index
