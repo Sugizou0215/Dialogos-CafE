@@ -38,6 +38,10 @@
         <%= f.label :イベントイメージ %>
         <%= f.attachment_field :event_image, class: "form-control-file event_image" %>
       </div>
+      <div class="form-group">
+        <%= f.label :タグ（スペースを入力することで複数のタグを付けることができます。） %>
+        <%= f.text_field :tag_name, class: "form-control" %>
+      </div>
       <!--ここにグループ選択-->
       <div class="form-group">
         <%= f.submit class: 'btn btn-secondary' %>

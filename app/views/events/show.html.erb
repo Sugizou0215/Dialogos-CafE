@@ -54,6 +54,14 @@
         <td><%= @event.tool %></td>
       </tr>
       <tr>
+        <td>タグ</td>
+        <td>
+          <% @event_tags.each do |tag| %>
+            <li><%= tag.name %></li>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
         <td>イベント主催者</td>
         <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
       </tr>
