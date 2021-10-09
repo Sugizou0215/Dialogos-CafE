@@ -7,12 +7,11 @@ class Group < ApplicationRecord
 
   #イベント画像用（refile）
   attachment :group_image
-  
+
   #検索機能用
   def self.search_for(value)
     @groups = Array.new
-    @groups = Group.where('name LIKE ?', '%' + value + '%')
-    # @events << Event.where('introduction LIKE ?', '%' + value + '%')
+    @groups = Group.where(['name LIKE(?) OR introduction LIKE(?)', "%#{value}%", "%#{value}%"])
     return @groups.uniq
   end
 end

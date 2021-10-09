@@ -21,8 +21,7 @@ class Event < ApplicationRecord
   #検索機能用
   def self.search_for(value)
     @events = Array.new
-    @events = Event.where('name LIKE ?', '%' + value + '%')
-    # @events << Event.where('introduction LIKE ?', '%' + value + '%')
+    @events = Event.where(['name LIKE(?) OR introduction LIKE(?)', "%#{value}%", "%#{value}%"])
     return @events.uniq
   end
 end
