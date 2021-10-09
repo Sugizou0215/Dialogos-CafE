@@ -28,4 +28,6 @@ Rails.application.routes.draw do
     resources :group_news, only: [:new, :create, :edit, :update, :destroy]
     resources :group_comments, only: [:create, :destroy]
   end
+  get "searches/event" => "searches#event"
+  get "searches/group" => "searches#group"
 end

@@ -17,5 +17,13 @@ class Event < ApplicationRecord
   def bookmark_by?(user)
     bookmarks.where(user_id: user.id).exists?
   end
+
+  #検索機能用
+  def self.search_for(value)
+    @events = Array.new
+    @events = Event.where('name LIKE ?', '%' + value + '%')
+    # @events << Event.where('introduction LIKE ?', '%' + value + '%')
+    return @events.uniq
+  end
 end
 
