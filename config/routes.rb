@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get "followers" => 'relationships#followers', as: 'followers'
   end
   resources :chats, only: [:show, :create]
+  get '/chats' => 'chats#error' #hidden_field使用に伴うルーティングエラー用
   patch "events/:id/cancel" => "events#cancel", as: 'cancel_event'
   resources :events, except: [:destroy] do
     get "join" => "events#join", as: 'join'
