@@ -1,104 +1,106 @@
-<div class="container">
-  <div class ="row">
-    <h2 class="col-10">
-      グループ詳細
-      <% if @apply %>
-        <small>
-          <i class="fas fa-exclamation-circle"></i>現在、このグループに参加申請中です。
-        </small>
-      <% end %>
-    </h2>
-    <table class="col-12 table table-striped table-condensed">
-      <tr>
-        <td class="col-3">
-          <%= attachment_image_tag(@group, :group_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
-        </td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>グループ名</td>
-        <td><%= @group.name %></td>
-      </tr>
-      <tr>
-        <td>グループ概要</td>
-        <td><%= @group.introduction %></td>
-      </tr>
-      <tr>
-        <td>グループ主催者</td>
-        <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
-      </tr>
-      <% if @admin_user == current_user %>
+<section id="group" class="bg-light">
+  <div class="container">
+    <div class ="row">
+      <h2 class="col-10">
+        グループ詳細
+        <% if @apply %>
+          <small>
+            <i class="fas fa-exclamation-circle"></i>現在、このグループに参加申請中です。
+          </small>
+        <% end %>
+      </h2>
+      <table class="col-12 table table-striped table-condensed">
         <tr>
-          <td>グループメンバー</td>
-          <td>
-            <% @group.users.each do |member| %>
-              <li><%= link_to member.name, user_path(member) %><br></li>
-            <% end %>
+          <td class="col-3">
+            <%= attachment_image_tag(@group, :group_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
           </td>
+          <td></td>
         </tr>
-       <% end %>
-    </table>
-    <% if @admin_user == current_user %>
-      <%= link_to '編集する', edit_group_path, class: 'btn btn-info' %>
-      <%= link_to "承認待ち一覧", group_applies_path(@group), class:"btn btn-primary" %>
-    <% else %>
-      <!-- ログインユーザが当該コミュニティに所属している場合 -->
-      <% if @group.users.include?(current_user) %>
-        <%= link_to '退会する', group_leave_path(@group), method: :delete, data:{ confirm: "「#{@group.name}」から退会します。よろしいですか？" } ,class:"btn btn-danger" %>
-      <!-- 当該コミュニティには所属していないが、ログインはしている場合 -->
-      <% elsif current_user %>
-         <% if @apply %>
-          <%= link_to '申請取消', group_apply_path(@group, apply_id: @apply.id), method: :delete, class: "btn btn-danger" %>
-        <% else %>
-          <%= link_to '加入申請', group_applies_path(@group), method: :post, class: "btn btn-success" %>
-        <% end %>
-      <% end %>
-    <% end %>
-    <div class="col-12">
-      <h2>お知らせ</h2>
-      <% @group_news.each do |group_new| %>
-        <div class="card bg-light mb-2">
-          <div class="card-body">
-          <h5 class="card-title"><%= group_new.title %></h5>
-          <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
-          <p class="card-text"><%= group_new.body %></p>
-          <% if @admin_user == current_user %>
-            <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
-            <%= link_to '削除', group_group_news_path(id: group_new.id, group_id: @group.id), data: {confirm: "本当に削除してもよろしいですか？"}, method: :delete, class:"btn btn-danger" %>
-          <% end %>
-        </div>
-      <% end %>
-      <% if @admin_user == current_user %>
-        <%= link_to 'お知らせを投稿する', new_group_group_news_path(@group), class:"btn btn-info" %>
-      <% end %>
-    </div>
-  </div>
-  <div class="row col-12">
-    <h2>コメント</h2>
-    <table class ="table">
-      <tbody class="bg-light">
-        <% @group.group_comments.each do |group_comment| %>
+        <tr>
+          <td>グループ名</td>
+          <td><%= @group.name %></td>
+        </tr>
+        <tr>
+          <td>グループ概要</td>
+          <td><%= @group.introduction %></td>
+        </tr>
+        <tr>
+          <td>グループ主催者</td>
+          <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
+        </tr>
+        <% if @admin_user == current_user %>
           <tr>
+            <td>グループメンバー</td>
             <td>
-              <%= attachment_image_tag(group_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
+              <% @group.users.each do |member| %>
+                <li><%= link_to member.name, user_path(member) %><br></li>
+              <% end %>
             </td>
-            <td><%= group_comment.user.name %></td>
-            <td><%= group_comment.created_at.strftime('%Y/%m/%d') %></td>
-            <td><%= group_comment.comment %></td>
-            <% if group_comment.user == current_user %>
-              <td>
-                <%= link_to "削除", group_group_comment_path(group_comment.group, group_comment), method: :delete,　class:"btn btn-danger" %>
-              </td>
-            <% end %>
           </tr>
+         <% end %>
+      </table>
+      <% if @admin_user == current_user %>
+        <%= link_to '編集する', edit_group_path, class: 'btn btn-info' %>
+        <%= link_to "承認待ち一覧", group_applies_path(@group), class:"btn btn-primary" %>
+      <% else %>
+        <!-- ログインユーザが当該コミュニティに所属している場合 -->
+        <% if @group.users.include?(current_user) %>
+          <%= link_to '退会する', group_leave_path(@group), method: :delete, data:{ confirm: "「#{@group.name}」から退会します。よろしいですか？" } ,class:"btn btn-danger" %>
+        <!-- 当該コミュニティには所属していないが、ログインはしている場合 -->
+        <% elsif current_user %>
+           <% if @apply %>
+            <%= link_to '申請取消', group_apply_path(@group, apply_id: @apply.id), method: :delete, class: "btn btn-danger" %>
+          <% else %>
+            <%= link_to '加入申請', group_applies_path(@group), method: :post, class: "btn btn-success" %>
+          <% end %>
         <% end %>
-      </tbody>
-    </table>
-    <div class="form-group col-12">
-      <%= form_with(model:[@group, @group_comment], local: true) do |f| %>
-        <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
-        <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
       <% end %>
+      <div class="col-12">
+        <h2>お知らせ</h2>
+        <% @group_news.each do |group_new| %>
+          <div class="card bg-light mb-2">
+            <div class="card-body">
+            <h5 class="card-title"><%= group_new.title %></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
+            <p class="card-text"><%= group_new.body %></p>
+            <% if @admin_user == current_user %>
+              <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
+              <%= link_to '削除', group_group_news_path(id: group_new.id, group_id: @group.id), data: {confirm: "本当に削除してもよろしいですか？"}, method: :delete, class:"btn btn-danger" %>
+            <% end %>
+          </div>
+        <% end %>
+        <% if @admin_user == current_user %>
+          <%= link_to 'お知らせを投稿する', new_group_group_news_path(@group), class:"btn btn-info" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row col-12">
+      <h2>コメント</h2>
+      <table class ="table">
+        <tbody class="bg-light">
+          <% @group.group_comments.each do |group_comment| %>
+            <tr>
+              <td>
+                <%= attachment_image_tag(group_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
+              </td>
+              <td><%= group_comment.user.name %></td>
+              <td><%= group_comment.created_at.strftime('%Y/%m/%d') %></td>
+              <td><%= group_comment.comment %></td>
+              <% if group_comment.user == current_user %>
+                <td>
+                  <%= link_to "削除", group_group_comment_path(group_comment.group, group_comment), method: :delete,　class:"btn btn-danger" %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="form-group col-12">
+        <%= form_with(model:[@group, @group_comment], local: true) do |f| %>
+          <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
+          <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+</section>
