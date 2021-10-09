@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     @event.users << current_user
     tag_list = params[:event][:tag_name].split(nil) #タグ機能用
     if @event.save
-      @event.save_tag(tag_list) 
+      @event.save_tag(tag_list)
       redirect_to events_path, notice: 'イベント作成に成功しました'
     else
       render :new
@@ -35,10 +35,27 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    @tags = @event.tags.pluck(:name) #イベントに紐づいたタグの名前のみ抽出
+    @event_tags = @tags.join(" ") #抽出したタグ名を半角スペースで結合
   end
 
   def update
-    if @event = Event.update(event_params)
+    @event = Event.find(params[:id])
+    if event = Event.update(event_params)
+      tag_list = params[:event][:tag_name].split(' ') # 入力されたタグを受け取る
+      @old_tagmaps=Tagmap.where(event_id: @event.id) #編集しようとしているイベントに紐づいていた中間テーブルを@old_tagmapsに入れる
+      #この時点で一旦中間テーブルのデータ消す
+      @old_tagmaps.each do |map|
+        map.delete
+      end
+      #tagの更新
+      tag_list.each do |tag_name|
+        @tag = Tag.find_or_create_by(name: tag_name) #タグを入力された内容で探し、あればそのまま、なければ新規作成
+        @tag.save
+        #再度1個づつ中間テーブルへ登録
+        new_tagmap = Tagmap.new(event_id: @event.id, tag_id: @tag.id)
+        new_tagmap.save
+      end
       redirect_to event_path(@event), notice: "正常にイベント情報が変更されました。"
     else
       render "edit"

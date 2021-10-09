@@ -57,7 +57,7 @@
         <td>タグ</td>
         <td>
           <% @event_tags.each do |tag| %>
-            <li><%= tag.name %></li>
+            <li class="btn btn-dark"><%= link_to tag.name, tag_path(tag.id), class:"text-white" %></li>
           <% end %>
         </td>
       </tr>
