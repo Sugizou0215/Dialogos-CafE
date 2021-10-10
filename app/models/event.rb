@@ -10,6 +10,8 @@ class Event < ApplicationRecord
   #タグ機能用
   has_many :tagmaps, dependent: :destroy
   has_many :tags, through: :tagmaps
+  #グループとの紐づけ用
+  belongs_to :group, optional: true
 
   #イベント画像用（refile）
   attachment :event_image

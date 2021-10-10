@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  
+
   #CSRF対策
   protect_from_forgery with: :exception
 
@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   #例外処理：RecordNotFoundが生じた場合、404用のエラー画面を出し、エラーをログに出力する
   rescue_from ActiveRecord::RecordNotFound, with: :rescue404
   rescue_from ActionController::RoutingError,   with: :render_404
-      
+
   private
 
     def rescue404(e)

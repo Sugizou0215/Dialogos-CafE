@@ -5,6 +5,8 @@ class EventsController < ApplicationController
 
   def new
     @genres = Genre.all #ジャンル表示用
+    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @groups = Group.where(id: @usergroups)
     @event = Event.new
   end
 
@@ -25,7 +27,10 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @admin_user = User.find(@event.admin_user_id)
     @event_comment = EventComment.new
-    @event_tags = @event.tags #タグ機能用
+    @event_tags = @event.tags #タグ機能用：現在選択されているイベントに紐づいているタグを入手
+    @event_group = Group.find_by(id: @event.group_id) #グループイベント表示用：現在選択されているイベントに紐づいているグループを入手
+    @group_users = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @user_groups = Group.where(id: @group_users)
   end
 
   def index

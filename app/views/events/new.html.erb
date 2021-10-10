@@ -41,10 +41,13 @@
             <%= f.attachment_field :event_image, class: "form-control-file event_image" %>
           </div>
           <div class="form-group">
-            <%= f.label :タグ（スペースを入力することで複数のタグを付けることができます。） %>
+            <%= f.label :タグ（半角スペースを入力することで複数のタグを付けることができます。） %>
             <%= f.text_field :tag_name, class: "form-control" %>
           </div>
-          <!--ここにグループ選択-->
+          <div class="form-group">
+            <%= f.label :グループ（選択すると該当グループメンバーのみが閲覧できます）  %>
+            <%= f.collection_select( :group_id, @groups.all, :id, :name, { include_blank: 'グループなし'} ,{:class => "form-control"}) %>
+          </div>
           <div class="form-group">
             <%= f.submit class: 'btn btn-secondary' %>
           </div>

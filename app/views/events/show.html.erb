@@ -74,7 +74,14 @@
               <% end %>
             </td>
           </tr>
-         <% end %>
+        <% end %>
+        <% if @event_group %>
+          <tr>
+            <td>グループ</td>
+            <td>このイベントは<%= link_to @event_group.name, group_path(@event_group) %>のメンバーのみ参加できます。</td>
+            </td>
+          </tr>
+        <% end %>
       </table>
       <div class="mx-auto">
         <% if user_signed_in? %>
@@ -90,7 +97,11 @@
               <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
             <% else %>
               <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count >= @event.capacity %>
-                <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+                <% if @user_groups.include?(@event_group) %>
+                  参加するには、<%= link_to @event_group.name, group_path(@event_group) %>に参加してください。
+                <% else %>
+                  <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+                <% end %>
               <% else %>
                 <p><i class="fas fa-exclamation-circle"></i>このイベントには参加できません。</p>
               <% end %>
