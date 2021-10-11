@@ -87,6 +87,8 @@ class EventsController < ApplicationController
   def join
     @event = Event.find(params[:event_id])
     @event.users << current_user
+    @user = User.find(@event.admin_user_id)
+    @user.create_notification_join!(current_user, params[:event_id]) #models/user.rb参照：イベント参加と同時に通知作成
     redirect_to event_path(@event)
   end
 

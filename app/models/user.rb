@@ -33,6 +33,9 @@ class User < ApplicationRecord
   has_many :groups, through: :applies
   #グループコメント機能用
   has_many :group_comments, dependent: :destroy
+  #イベント通知機能用
+  has_many :active_notifications, class_name: "EventNotice", foreign_key: "visiter_id", dependent: :destroy
+   has_many :passive_notifications, class_name: "EventNotice", foreign_key: "visited_id", dependent: :destroy
 
   #ユーザー画像用（refile）
   attachment :user_image
@@ -65,6 +68,31 @@ class User < ApplicationRecord
       user.name = auth.info.name,
       user.email = auth.info.email,
       user.password = Devise.friendly_token[0, 20]
+    end
+  end
+
+  #通知機能用（フォローと同時に通知(EventNotice)を作成する）
+  def create_notification_follow!(current_user)
+    temp = EventNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'follow'])
+    if temp.blank?
+      notification = current_user.active_notifications.new(
+        visited_id: id,
+        action: 'follow'
+      )
+      notification.save if notification.valid?
+    end
+  end
+
+  #通知機能用（イベント参加と同時に通知(EventNotice)を作成する）
+  def create_notification_join!(current_user, event_id)
+    temp = EventNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'join'])
+    if temp.blank?
+      notification = current_user.active_notifications.new(
+        visited_id: id,
+        event_id: event_id,
+        action: 'join'
+      )
+      notification.save if notification.valid?
     end
   end
 end

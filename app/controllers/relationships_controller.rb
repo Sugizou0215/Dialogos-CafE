@@ -3,12 +3,14 @@ class RelationshipsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    current_user.follow(params[:user_id]) #follow(params[:user_id]):Userモデル参照
+    current_user.follow(params[:user_id]) #models/user.rb参照：フォロー関係を生成
+    @user = User.find(params[:user_id])
+    @user.create_notification_follow!(current_user) #models/user.rb参照：フォローと同時に通知作成
     redirect_to request.referer
   end
 
   def destroy
-    current_user.unfollow(params[:user_id]) #unfollow(params[:user_id]):Userモデル参照
+    current_user.unfollow(params[:user_id]) #models/user.rb参照：フォロー関係を解消
     redirect_to request.referer
   end
 
