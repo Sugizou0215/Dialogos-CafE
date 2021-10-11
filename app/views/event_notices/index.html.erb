@@ -2,13 +2,19 @@
   <div class="container">
     <div class="row">
       <h3 class="text-center col-12 mt-3">通知</h3>
-        <%= link_to user_event_notices_destroy_all_path, method: :delete, class:"col-2" do %>
-          <i class="fas fa-trash" style="color: black;"></i>
-          <h7 style="color: black;">全削除</h7>
-        <% end %>
+      <%= link_to user_event_notices_destroy_all_path, method: :delete, class:"col-2" do %>
+        <i class="fas fa-trash" style="color: black;"></i>
+        <h7 style="color: black;">全削除</h7>
+      <% end %>
       <% if @event_notices.exists? %>
+        <h3 class="text-center col-12 mt-3">イベント関連通知</h3>
         <div class="col-10">
-          <%= render 'notice', event_notices: @event_notices %>
+          <%= render 'event_notice', event_notices: @event_notices %>
+        </div>
+      <% elsif @group_notices.exists? %>
+        <h3 class="text-center col-12 mt-3">グループ関連通知</h3>
+        <div class="col-10">
+          <%= render 'group_notice', group_notices: @group_notices %>
         </div>
       <% else %>
         <p>通知はありません</p>

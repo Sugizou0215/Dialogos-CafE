@@ -9,7 +9,7 @@ class EventCommentsController < ApplicationController
     @comment_event = @comment.event
     if @comment.save
       #通知の作成
-      @comment_event.create_notification_comment!(current_user, @comment.id)
+      @comment_event.create_notification_comment!(current_user, @comment)
       redirect_to event_path(event)
     end
   end

@@ -17,7 +17,7 @@
           <li><%= link_to ' グループ一覧',groups_path,class: 'fas fa-users nav-link text-light' %></li>
           <li><%= link_to ' イベント一覧',events_path ,class: 'fas fa-comments nav-link text-light'%></li>
           <li><%= link_to ' ログアウト', destroy_user_session_path, method: :delete,class: 'fas fa-sign-out-alt nav-link text-light' %></li>
-          <% if unchecked_notifications.any? %>
+          <% if unchecked_notifications.any? %> <%# helper/notices_helper.rb参照%>
             <i class="fa fa-circle" style="color: gold;"></i>
           <% end %>
           <li>
