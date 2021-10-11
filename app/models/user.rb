@@ -34,8 +34,11 @@ class User < ApplicationRecord
   #グループコメント機能用
   has_many :group_comments, dependent: :destroy
   #イベント通知機能用
-  has_many :active_notifications, class_name: "EventNotice", foreign_key: "visiter_id", dependent: :destroy
-   has_many :passive_notifications, class_name: "EventNotice", foreign_key: "visited_id", dependent: :destroy
+  has_many :active_event_notifications, class_name: "EventNotice", foreign_key: "visiter_id", dependent: :destroy
+  has_many :passive_event_notifications, class_name: "EventNotice", foreign_key: "visited_id", dependent: :destroy
+  #グループ通知機能用
+  has_many :active_group_notifications, class_name: "GroupNotice", foreign_key: "visiter_id", dependent: :destroy
+  has_many :passive_group_notifications, class_name: "GroupNotice", foreign_key: "visited_id", dependent: :destroy
 
   #ユーザー画像用（refile）
   attachment :user_image
@@ -75,7 +78,7 @@ class User < ApplicationRecord
   def create_notification_follow!(current_user)
     temp = EventNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'follow'])
     if temp.blank?
-      notification = current_user.active_notifications.new(
+      notification = current_user.active_event_notifications.new(
         visited_id: id,
         action: 'follow'
       )
@@ -87,10 +90,23 @@ class User < ApplicationRecord
   def create_notification_join!(current_user, event_id)
     temp = EventNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'join'])
     if temp.blank?
-      notification = current_user.active_notifications.new(
+      notification = current_user.active_group_notifications.new(
         visited_id: id,
         event_id: event_id,
         action: 'join'
+      )
+      notification.save if notification.valid?
+    end
+  end
+
+  #通知機能用（グループ参加申請と同時に通知(EventNotice)を作成する）
+  def create_notification_join!(current_user, group_id)
+    temp = GroupNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'join'])
+    if temp.blank?
+      notification = current_user.active_group_notifications.new(
+        visited_id: id,
+        group_id: group_id,
+        action: 'apply'
       )
       notification.save if notification.valid?
     end
