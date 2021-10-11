@@ -21,7 +21,7 @@
             <i class="fa fa-circle" style="color: gold;"></i>
           <% end %>
           <li>
-            <%= link_to "通知", user_event_notices_path(current_user), class: 'fas fa-sign-out-alt nav-link text-light' %>
+            <%= link_to "通知", user_notices_path(current_user), class: 'fas fa-sign-out-alt nav-link text-light' %>
           </li>
         <% else %>
           <li><%= link_to ' Home',root_path,class: 'fas fa-home nav-link text-light' %></li>
