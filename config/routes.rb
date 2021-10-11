@@ -13,8 +13,8 @@ Rails.application.routes.draw do
     resources :relationships, only: [:create, :destroy]
     get "followings" => 'relationships#followings', as: 'followings'
     get "followers" => 'relationships#followers', as: 'followers'
-    resources :event_notices, only: [:index]
-    delete "/event_notices/destroy_all" => 'event_notices#destroy_all'
+    resources :notices, only: [:index]
+    delete "/notices/destroy_all" => 'notices#destroy_all'
   end
   resources :chats, only: [:show, :create]
   get '/chats' => 'chats#error' #hidden_field使用に伴うルーティングエラー用
