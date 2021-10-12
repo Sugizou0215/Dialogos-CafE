@@ -1,4 +1,26 @@
 class Event < ApplicationRecord
+
+  #バリデーション
+  validates :name, length: { minimum: 1, maximum: 50 }
+  validates :introduction, presence: true
+  validates :genre_id, presence: true
+  validates :start_at, presence: true
+  validates :finish_at, presence: true, if: :after_start_at?
+  validates :deadline, presence: true, if: :before_start_at?
+  validates :capacity, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 2}
+  validates :tool, presence: true
+
+  #開始日時が終了日時より後になるとエラー
+  def after_start_at?
+    start_at < finish_at
+  end
+
+  #参加締め切りが開始日時より後になるとエラー
+  def before_start_at?
+    start_at > deadline
+  end
+
+  #アソシエーション
   has_many :event_users
   has_many :users, through: :event_users ,dependent: :destroy
   #ジャンル機能用
