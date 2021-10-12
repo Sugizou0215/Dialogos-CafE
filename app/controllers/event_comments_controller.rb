@@ -3,22 +3,20 @@ class EventCommentsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    event = Event.find(params[:event_id])
-    @comment = current_user.event_comments.new(event_comment_params)
-    @comment.event_id = event.id
-    @comment_event = @comment.event
-    if @comment.save
+    @event = Event.find(params[:event_id])
+    @event_comment = current_user.event_comments.new(event_comment_params)
+    @event_comment.event_id = @event.id
+    @comment_event = @event_comment.event
+    if @event_comment.save
       #通知の作成
-      @comment_event.create_notification_comment!(current_user, @comment)
-      redirect_to event_path(event)
+      @comment_event.create_notification_comment!(current_user, @event_comment)
     end
   end
 
   def destroy
     @event = Event.find(params[:event_id])
-    event_comment = @event.event_comments.find(params[:id])
-    event_comment.destroy
-    redirect_to event_path(params[:event_id])
+    @event_comment = @event.event_comments.find(params[:id])
+    @event_comment.destroy
   end
 
   private

@@ -15,16 +15,8 @@
           <% end %>
         </small>
       </h2>
-      <h4 class="text-right col-1">
-        <% if @event.bookmark_by?(current_user) %>
-          <%= link_to event_bookmarks_path(@event), method: :delete do %>
-            <i class="fas fa-bookmark"></i></i><%= @event.bookmarks.count %>
-          <% end %>
-        <% else %>
-          <%= link_to event_bookmarks_path(@event), method: :post do %>
-            <i class="far fa-bookmark"></i></i><%= @event.bookmarks.count %>
-          <% end %>
-        <% end %>
+      <h4 class="text-right col-1" id="bookmark">
+        <%= render 'bookmarks/bookmark', event: @event %>
       </h4>
       <table class="col-12 table table-striped table-condensed">
         <tr>
@@ -111,33 +103,9 @@
       </div>
     </div>
     <div class="row">
-      <h2>コメント</h2>
-      <table class ="table">
-        <tbody class="bg-light">
-          <% @event.event_comments.each do |event_comment| %>
-            <tr>
-              <td>
-                <%= attachment_image_tag(event_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
-              </td>
-              <td><%= event_comment.user.name %></td>
-              <td><%= event_comment.created_at.strftime('%Y/%m/%d') %></td>
-              <td><%= event_comment.comment %></td>
-              <% if event_comment.user == current_user %>
-                <td>
-                  <%= link_to "削除", event_event_comment_path(event_comment.event, event_comment), method: :delete %>
-                </td>
-              <% else %>
-                <td></td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <div class="form-group col-12">
-        <%= form_with(model:[@event, @event_comment], local: true) do |f| %>
-          <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
-          <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
-        <% end %>
+      <%#コメント機能呼び出し%>
+      <div id="event_comments" class="col-12">
+        <%= render 'event_comments/index', event: @event %>
       </div>
     </div>
   </div>
