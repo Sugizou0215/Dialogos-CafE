@@ -9,7 +9,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <% unless current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
+    <% if user_signed_in? %>
       <%= render 'layouts/header' %>
     <% end %>
     <%= render 'layouts/flash'%>
