@@ -5,11 +5,15 @@ class Users::SessionsController < Devise::SessionsController
 
   # 会員の論理削除のための記述。退会後は、同じメールアドレスではログイン不可とする。
   def reject_user
-    @user = User.find_by(email: params[:user][:email].downcase)
+    #ログイン時に入力されたメールアドレスに対応するユーザーが存在するか探す
+    email = params[:user][:email].downcase + '_is_deleted'
+    @user = User.find_by(email: email)
     #emailを検索して該当があった場合
     if @user
       #入力されたパスワードが正しく、かつactive_for_authentication?メソッドがfalseである（＝is_validがfalse：退会済み)場合
       if @user.valid_password?(params[:user][:password]) && (@user.active_for_authentication? == false)
+
+    binding.pry
         flash[:error] = '退会済みです。再度ご登録をしてご利用ください。'
         redirect_to new_user_session_path
       else

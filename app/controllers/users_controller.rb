@@ -49,6 +49,9 @@ class UsersController < ApplicationController
   def leave
     @user = current_user
     @user.update(is_valid: false)
+    deleted_email = @user.email + '_is_deleted' #退会するユーザーのメールアドレスに「_is_deleted」を付ける（再登録時のユニーク制約回避）
+    @user.update(email: deleted_email)
+    @user.skip_email_changed_notification! #deviseによるアドレス変更時の確認メールを送る処理をスキップ
     reset_session
     redirect_to root_path
   end
