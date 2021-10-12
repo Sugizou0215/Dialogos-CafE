@@ -47,10 +47,12 @@ class GroupsController < ApplicationController
   #参加申請を許可すると、GroupUserレコードを生成し、該当のapplyレコードを削除する
   def join
     @group = Group.find(params[:group_id])
+    @user = User.find(params[:user_id])
     @apply = Apply.find_by(params[:group_id], params[:user_id])
     @group.users << User.find(params[:user_id])
     @apply.destroy!
     flash[:notice] = '参加を承認しました。'
+    @user.create_notification_approval!(@user, params[:group_id]) #models/user.rb参照：グループ参加申請と同時に通知作成
     redirect_to  group_path(@group)
   end
 

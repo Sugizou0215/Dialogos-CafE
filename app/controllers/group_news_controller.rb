@@ -1,5 +1,5 @@
 class GroupNewsController < ApplicationController
-  
+
   before_action :authenticate_user!, except: [:index]
 
   def new
@@ -9,8 +9,12 @@ class GroupNewsController < ApplicationController
   def create
     @group_new = GroupNew.new(group_new_params)
     @group_new.group_id = params[:group_id]
+    @group = Group.find(params[:group_id])
+    @group_users = GroupUser.where(group_id: params[:group_id]).pluck(:user_id)
+    @users = User.where(id: @group_users)
     if @group_new.save
       redirect_to group_path(@group_new.group_id), notice: 'お知らせを投稿しました'
+      @group.create_notification_news!(@users, @group) #models/user.rb参照：グループ参加申請と同時に通知作成
     else
       render :new
     end

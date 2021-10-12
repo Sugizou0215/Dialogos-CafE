@@ -111,4 +111,17 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+  
+  #通知機能用（グループ参加承認と同時に通知(EventNotice)を作成する）
+  def create_notification_approval!(current_user, group_id)
+    temp = GroupNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'approval'])
+    if temp.blank?
+      notification = current_user.active_group_notifications.new(
+        visited_id: id,
+        group_id: group_id,
+        action: 'approval'
+      )
+      notification.save if notification.valid?
+    end
+  end
 end

@@ -51,4 +51,18 @@ class Group < ApplicationRecord
     end
     notification.save if notification.valid?
   end
+
+  #通知機能(グループニュース)用
+  def create_notification_news!(users, group)
+    users.each do |user|
+      #users（グループ所属のユーザー）に通知を送る
+      notification = user.active_group_notifications.new(
+        visiter_id: group.admin_user_id,
+        visited_id: user.id,
+        group_id: group.id,
+        action: 'news'
+      )
+      notification.save if notification.valid?
+    end
+  end
 end

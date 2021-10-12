@@ -60,13 +60,14 @@
         <% @group_news.each do |group_new| %>
           <div class="card bg-light mb-2">
             <div class="card-body">
-            <h5 class="card-title"><%= group_new.title %></h5>
-            <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
-            <p class="card-text"><%= group_new.body %></p>
-            <% if @admin_user == current_user %>
-              <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
-              <%= link_to '削除', group_group_news_path(id: group_new.id, group_id: @group.id), data: {confirm: "本当に削除してもよろしいですか？"}, method: :delete, class:"btn btn-danger" %>
-            <% end %>
+              <h5 class="card-title"><%= group_new.title %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
+              <p class="card-text"><%= group_new.body %></p>
+              <% if @admin_user == current_user %>
+                <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
+                <%= link_to '削除', group_group_news_path(id: group_new.id, group_id: @group.id), data: {confirm: "本当に削除してもよろしいですか？"}, method: :delete, class:"btn btn-danger" %>
+              <% end %>
+            </div>
           </div>
         <% end %>
         <% if @admin_user == current_user %>
@@ -74,7 +75,7 @@
         <% end %>
       </div>
     </div>
-    <div class="row">
+    <div class="row col-12">
       <div id="group_comments" class="col-12">
         <%= render 'group_comments/index', group: @group %>
       </div>
