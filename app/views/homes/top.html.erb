@@ -25,7 +25,10 @@
           <%= render 'events/calender',events: @events %>
         <div id="tab2" class="tab-pane">
           <div class="col-12 mt-2">
-            <%= render 'events/index',events: @events %>
+            <%= render 'events/index',events: @new_events %>
+            <div>
+              <%= paginate @new_events %>
+            </div>
           </div>
         </div>
       </div>
