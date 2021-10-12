@@ -10,15 +10,15 @@ class ApplicationController < ActionController::Base
   end
 
   #例外処理：RecordNotFoundが生じた場合、404用のエラー画面を出し、エラーをログに出力する
-  # rescue_from ActiveRecord::RecordNotFound, with: :rescue404
-  # rescue_from ActionController::RoutingError,   with: :render_404
+  rescue_from ActiveRecord::RecordNotFound, with: :rescue404
+  rescue_from ActionController::RoutingError,   with: :render_404
 
-  # private
+  private
 
-  #   def rescue404(e)
-  #     @exception = e
-  #     render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
-  #   end
+    def rescue404(e)
+      @exception = e
+      render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
+    end
 
   protected
 

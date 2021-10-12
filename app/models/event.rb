@@ -5,19 +5,25 @@ class Event < ApplicationRecord
   validates :introduction, presence: true
   validates :genre_id, presence: true
   validates :start_at, presence: true
-  validates :finish_at, presence: true, if: :after_start_at?
-  validates :deadline, presence: true, if: :before_start_at?
+  validates :finish_at, presence: true
+  validates :deadline, presence: true
+  validate :after_start_at
+  validate :before_start_at
   validates :capacity, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: 2}
   validates :tool, presence: true
 
   #開始日時が終了日時より後になるとエラー
-  def after_start_at?
-    start_at < finish_at
+  def after_start_at
+    unless start_at < finish_at
+      errors.add(:start_at, "開始時刻が終了時刻より後になっています。")
+    end
   end
 
   #参加締め切りが開始日時より後になるとエラー
-  def before_start_at?
-    start_at > deadline
+  def before_start_at
+    unless start_at > deadline
+      errors.add(:start_at, "開始時刻が参加締め切り時刻より前になっています。")
+    end
   end
 
   #アソシエーション
