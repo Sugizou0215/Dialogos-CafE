@@ -16,7 +16,7 @@ class NoticesController < ApplicationController
 
   #通知を全削除
   def destroy_all
-    @event_notices = current_user.passive_evevt_notifications.destroy_all
+    @event_notices = current_user.passive_event_notifications.destroy_all
     @group_notices = current_user.passive_group_notifications.destroy_all
     redirect_to user_notices_path
   end
