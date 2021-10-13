@@ -15,9 +15,10 @@
 					  <table class="table">
 						  <thead>
 						    <tr>
-						    	<th></th>
+						    	<th>イメージ</th>
 						      <th>ユーザー名</th>
-						      <th colspan="4"></th>
+						      <th>プロフィール</th>
+						      <th colspan="1"></th>
 						    </tr>
 						  </thead>
 						  <tbody>
@@ -25,8 +26,7 @@
 						      <tr>
 						      	<td><%= attachment_image_tag user, :user_image, format: 'jpeg', fallback: "no-image.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" %></td>
 						        <td><%= user.name %></td>
-						        <td>フォロー数: <%= user.followings.count %></td>
-						        <td>フォロワー数: <%= user.followers.count %></td>
+						        <td><%= user.introduction %></td>
 						        <td><%= link_to "詳細", user_path(user.id) %></td>
 						      </tr>
 						    <% end %>
