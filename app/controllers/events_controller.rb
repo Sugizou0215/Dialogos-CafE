@@ -38,6 +38,7 @@ class EventsController < ApplicationController
     @events = Event.all.page(params[:page]).reverse_order.per(10)
     @user = current_user #ユーザー情報表示用（サイドバー）
     @genres = Genre.all #ジャンル一覧表示用
+    @tags = Tag.all #タグ一覧表示用
   end
 
   def edit
