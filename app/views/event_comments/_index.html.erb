@@ -4,7 +4,7 @@
     <% @event.event_comments.each do |event_comment| %>
       <tr>
         <td>
-          <%= attachment_image_tag(event_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
+          <%= attachment_image_tag(event_comment.user, :user_image, format: 'jpeg', fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
         </td>
         <td><%= event_comment.user.name %></td>
         <td><%= event_comment.created_at.strftime('%Y/%m/%d') %></td>

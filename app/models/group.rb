@@ -1,4 +1,10 @@
 class Group < ApplicationRecord
+
+  #バリデーション
+  validates :name, length: { minimum: 1, maximum: 50 }, uniqueness: true
+  validates :introduction, presence: true
+
+  #アソシエーション
   has_many :group_users
   has_many :users, through: :group_users
   #参加申請機能用

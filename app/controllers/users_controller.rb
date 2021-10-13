@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:error]
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def show
@@ -8,27 +8,30 @@ class UsersController < ApplicationController
     #汚いので後でメソッドを切り離すこと
     #参加前・参加済みのイベントを抽出（EventUserテーブルから検索）
     @user_events = EventUser.where(user_id: @user.id).pluck(:event_id).uniq
-    @join_events = Event.where(id: @user_events)
+    @join_events = Event.where(id: @user_events).page(params[:page])
     @before_join_events = Array.new
     @after_join_events = Array.new
     @join_events.each do |event|
       #参加前のイベントを抽出（EventUserテーブルから検索）
       if event.finish_at > DateTime.now
         @before_join_events << event
+        @before_join_events = Kaminari.paginate_array(@before_join_events).page(params[:page]).per(5)
       #参加済のイベントを抽出（EventUserテーブルから検索）
       else
         @after_join_events << event
+        @after_join_events = Kaminari.paginate_array(@after_join_events).page(params[:page]).per(5)
       end
     end
     #ブックマークしたイベントを抽出
     @user_bookmarks = Bookmark.where(user_id: @user.id).pluck(:event_id).uniq
     @bookmark_events = Event.where(id: @user_bookmarks)
+    @bookmark_events = @bookmark_events.page(params[:page]).per(5)
     #参加しているグループを抽出
     @user_groups = GroupUser.where(user_id: @user.id).pluck(:group_id).uniq
-    @join_groups = Group.where(id: @user_groups)
+    @join_groups = Group.where(id: @user_groups).page(params[:page]).per(5)
     #参加申請中のグループを抽出
     @user_applies = Apply.where(user_id: @user.id).pluck(:group_id).uniq
-    @apply_groups = Group.where(id: @user_applies)
+    @apply_groups = Group.where(id: @user_applies).page(params[:page]).per(5)
   end
 
   def edit
@@ -39,7 +42,7 @@ class UsersController < ApplicationController
     @user = current_user
     if @user.update(user_params)
       flash[:notice] = '登録情報を編集しました。'
-      redirect_to user_path
+      redirect_to user_path(current_user)
     else
       render :edit
     end
@@ -57,6 +60,10 @@ class UsersController < ApplicationController
   end
 
   def confirm
+  end
+
+  #新規登録画面で出るエラー対応用
+  def error
   end
 
   private

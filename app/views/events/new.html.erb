@@ -2,7 +2,7 @@
   <%= render 'layouts/error', model: @event %>
   <div class="container">
     <div class ="row justify-content-center">
-      <h1 class="col-12 text-center">新規イベント作成</h1>
+      <h1 class="col-12 text-center mt-3">新規イベント作成</h1>
       <div>
         <%= form_with model:@event, local:true do |f| %>
           <div class="form-group">
@@ -51,7 +51,7 @@
               <%= f.collection_select( :group_id, @groups.all, :id, :name, { include_blank: 'グループなし'} ,{:class => "form-control"}) %>
             </div>
           <% end %>
-          <div class="form-group">
+          <div class="form-group text-center">
             <%= f.submit class: 'btn btn-secondary' %>
           </div>
         <% end %>

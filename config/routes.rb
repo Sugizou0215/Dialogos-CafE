@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   }
   get "/confirm" => "users#confirm", as: 'users_confirm'
   put "/users/:id/leave" => "users#leave", as: 'users_leave'
+  get "/users" => "users#error"
   resources :users, only: [:show, :edit, :update] do
     resources :relationships, only: [:create, :destroy]
     get "followings" => 'relationships#followings', as: 'followings'

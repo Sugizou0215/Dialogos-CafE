@@ -2,12 +2,12 @@
   <div class="container">
     <div class='row'>
       <%= render 'users/user_info',user: @user %>
-      <div class='col-9 mt-2'>
-        <h2>イベント一覧</h2>
-        <div class="input-group d-inline-block">
+      <div class='col-9 mt-3'>
+        <div class="input-group form-inline">
+          <h2 class="col-8">イベント一覧</h2>
           <%= form_with url:searches_event_path, method: :get, local: true do |f| %>
-            <%= f.text_field "search[value]", placeholder: "検索", class:"border-0" %>
-            <%= f.submit "検索", class:"btn btn-outline-secondary border-0" %>
+            <%= f.text_field "search[value]", placeholder: "イベント検索", class:"border-bottom form-control d-inline" %>
+            <%= f.submit "検索", class:"btn btn-outline-secondary border-0 d-inline" %>
           <% end %>
         </div>
         <ul class="nav nav-tabs">
@@ -17,13 +17,21 @@
           <li class="nav-item">
               <a href="#tab2" class="nav-link" data-toggle="tab">一覧</a>
           </li>
+          <li class="nav-item">
+              <a href="#tab3" class="nav-link" data-toggle="tab">ジャンル</a>
+          </li>
         </ul>
         <div class="tab-content">
           <div id="tab1" class="tab-pane active">
-            <%= render 'events/calender',events: @events %>
+            <%= render 'events/calender',events: @calender_events %>
           <div id="tab2" class="tab-pane">
             <div class="col-12 mt-2">
               <%= render 'events/index',events: @events %>
+            </div>
+          </div>
+          <div id="tab2" class="tab-pane">
+            <div class="col-12 mt-2">
+              <%= render 'genres/index',genres: @genres %>
             </div>
           </div>
         </div>
