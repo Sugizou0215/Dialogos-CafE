@@ -24,6 +24,12 @@ body {
     font-family: 'Shippori Mincho', serif;
 }
 
+// 画像（rounded-circle処理をしたもの）
+
+.rounded-circle {
+  object-fit: cover; //画面の縦横比を変更せず中央トリミング
+
+}
 
 // homes/top homes/about共用
 .emerge {
