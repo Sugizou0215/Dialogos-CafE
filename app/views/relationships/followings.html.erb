@@ -1,25 +1,43 @@
-<h2>Follow Users</h2>
-<% if @users.exists? %>
-  <table class="table">
-	  <thead>
-	    <tr>
-	    	<th>image</th>
-	      <th>name</th>
-	      <th colspan="3"></th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <% @users.each do |user| %>
-	      <tr>
-	      	<td><%= attachment_image_tag user, :user_image, :fill, 60, 60, fallback: "no-image.jpg" %></td>
-	        <td><%= user.name %></td>
-	        <td>フォロー数: <%= user.followings.count %></td>
-	        <td>フォロワー数: <%= user.followers.count %></td>
-	        <td><%= link_to "Show", user_path(user.id) %></td>
-	      </tr>
-	    <% end %>
-	  </tbody>
-	</table>
-<% else %>
-  <p>ユーザーはいません</p>
-<% end %>
+<section id="user" class="bg-light">
+  <div class='container'>
+    <div class='row pt-3'>
+    	<%= render 'users/user_info',user: @user %>
+    	<div class="col-9">
+				<div class="input-group form-inline">
+          <h2 class="col-8">フォローしているユーザー一覧</h2>
+          <%= form_with url:searches_user_path, method: :get, local: true do |f| %>
+            <%= f.text_field "search[value]", placeholder: "ユーザーを探す", class:"border-bottom form-control d-inline" %>
+            <%= f.submit "検索", class:"btn btn-outline-secondary border-0 d-inline" %>
+          <% end %>
+        </div>
+       	<div>
+					<% if @users.present? %>
+					  <table class="table">
+						  <thead>
+						    <tr>
+						    	<th></th>
+						      <th>ユーザー名</th>
+						      <th colspan="4"></th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <% @users.each do |user| %>
+						      <tr>
+						      	<td><%= attachment_image_tag user, :user_image, format: 'jpeg', fallback: "no-image.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" %></td>
+						        <td><%= user.name %></td>
+						        <td>フォロー数: <%= user.followings.count %></td>
+						        <td>フォロワー数: <%= user.followers.count %></td>
+						        <td><%= link_to "詳細", user_path(user.id) %></td>
+						      </tr>
+						    <% end %>
+						  </tbody>
+						</table>
+					<% else %>
+					  <p>フォローしているユーザーはいません</p>
+					<% end %>
+				</div>
+				<%= paginate @users %>
+			</div>
+		</div>
+  </div>
+</section>

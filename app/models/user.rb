@@ -63,6 +63,13 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+  #検索機能用
+  def self.search_for(value)
+    @users = Array.new
+    @users = User.where(['name LIKE(?) OR introduction LIKE(?)', "%#{value}%", "%#{value}%"])
+    return @users.uniq
+  end
+
   #SNS認証用
   def self.find_or_create_for_oauth(auth)
     find_or_create_by!(email: auth.info.email) do |user|
@@ -111,7 +118,7 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
-  
+
   #通知機能用（グループ参加承認と同時に通知(EventNotice)を作成する）
   def create_notification_approval!(current_user, group_id)
     temp = GroupNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'approval'])

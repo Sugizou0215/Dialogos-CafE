@@ -18,11 +18,15 @@ class RelationshipsController < ApplicationController
   def followings
     user = User.find(params[:user_id])
     @users = user.followings
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(10)
+    @user = current_user
   end
 
   #フォロワー一覧の表示用
   def followers
     user = User.find(params[:user_id])
     @users = user.followers
+    @users = Kaminari.paginate_array(@users).page(params[:page]).per(10)
+    @user = current_user
   end
 end

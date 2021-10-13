@@ -1,0 +1,15 @@
+<section id="event" class="bg-light">
+  <div class="container">
+    <div class='row'>
+      <%= render 'users/user_info',user: @user %>
+      <div class='col-9 mt-3'>
+        <h2 class="mt-2 border-bottom">ジャンル：<%= @genre.name %>のイベント一覧</h2>
+        <% if @events.empty? %>
+          <p>ジャンル：<%= @genre.name %>のイベントは現在ありません。</p>
+        <% else %>
+          <%= render 'events/index',events: @events %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

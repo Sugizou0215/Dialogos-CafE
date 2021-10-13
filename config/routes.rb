@@ -35,5 +35,7 @@ Rails.application.routes.draw do
   end
   get "searches/event" => "searches#event"
   get "searches/group" => "searches#group"
+  get "searches/user" => "searches#user"
   resources :tags, only: [:show]
+  resources :genres, only: [:show]
 end
