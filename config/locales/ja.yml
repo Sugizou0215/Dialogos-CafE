@@ -17,6 +17,9 @@ ja:
           deadline: 参加締切日時
           capacity: 定員
           tool: 使用ツール
+        group:
+          name: グループ名
+          introduction: グループ概要
   date:
     abbr_day_names:
     - 日

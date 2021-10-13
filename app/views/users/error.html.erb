@@ -1,0 +1,15 @@
+<%= render 'layouts/header' %>
+<section id="user" class="bg-light">
+  <div class="container pt-5">
+    <div class="text-center col-12">
+      <div class="col-12">
+        <h3 class="text-danger">リロードされたため、エラーが発生しました。</i></h3><br><br>
+      </div>
+      <div class="col-12">
+        大変申し訳ございません、セッションが途切れたため、エラーが発生しました。<br>
+        再度、以下のリンクから新規登録画面に移動してください。<br>
+        <%= link_to "新規登録画面へ", new_user_registration_path %><br><br>
+      </div>
+    </div>
+  </div>
+</section>

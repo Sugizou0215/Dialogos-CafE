@@ -1,7 +1,7 @@
 <section id="group" class="bg-light">
   <div class="container">
     <div class ="row">
-      <h2 class="col-10">
+      <h2 class="col-10 mt-3">
         グループ詳細
         <% if @apply %>
           <small>
@@ -28,40 +28,40 @@
           <td>グループ主催者</td>
           <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
         </tr>
-        <% if @admin_user == current_user %>
-          <tr>
-            <td>グループメンバー</td>
-            <td>
-              <% @group.users.each do |member| %>
-                <li><%= link_to member.name, user_path(member) %><br></li>
-              <% end %>
-            </td>
-          </tr>
-         <% end %>
+        <tr>
+          <td>グループメンバー</td>
+          <td>
+            <% @group.users.each do |member| %>
+              <li><%= link_to member.name, user_path(member) %><br></li>
+            <% end %>
+          </td>
+        </tr>
       </table>
-      <% if @admin_user == current_user %>
-        <%= link_to '編集する', edit_group_path, class: 'btn btn-info' %>
-        <%= link_to "承認待ち一覧", group_applies_path(@group), class:"btn btn-primary" %>
-      <% else %>
-        <!-- ログインユーザが当該コミュニティに所属している場合 -->
-        <% if @group.users.include?(current_user) %>
-          <%= link_to '退会する', group_leave_path(@group), method: :delete, data:{ confirm: "「#{@group.name}」から退会します。よろしいですか？" } ,class:"btn btn-danger" %>
-        <!-- 当該コミュニティには所属していないが、ログインはしている場合 -->
-        <% elsif current_user %>
-           <% if @apply %>
-            <%= link_to '申請取消', group_apply_path(@group, apply_id: @apply.id), method: :delete, class: "btn btn-danger" %>
-          <% else %>
-            <%= link_to '加入申請', group_applies_path(@group), method: :post, class: "btn btn-success" %>
+      <div class="mx-auto">
+        <% if @admin_user == current_user %>
+          <%= link_to '編集する', edit_group_path, class: 'btn btn-info' %>
+          <%= link_to "承認待ち一覧", group_applies_path(@group), class:"btn btn-primary" %>
+        <% else %>
+          <!-- ログインユーザが当該コミュニティに所属している場合 -->
+          <% if @group.users.include?(current_user) %>
+            <%= link_to '退会する', group_leave_path(@group), method: :delete, data:{ confirm: "「#{@group.name}」から退会します。よろしいですか？" } ,class:"btn btn-danger" %>
+          <!-- 当該コミュニティには所属していないが、ログインはしている場合 -->
+          <% elsif current_user %>
+             <% if @apply %>
+              <%= link_to '申請取消', group_apply_path(@group, apply_id: @apply.id), method: :delete, class: "btn btn-danger" %>
+            <% else %>
+              <%= link_to '加入申請', group_applies_path(@group), method: :post, class: "btn btn-success" %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
       <div class="col-12">
         <h2>お知らせ</h2>
         <% @group_news.each do |group_new| %>
           <div class="card bg-light mb-2">
             <div class="card-body">
               <h5 class="card-title"><%= group_new.title %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at %></h6>
+              <h6 class="card-subtitle mb-2 text-muted"><%= group_new.updated_at.strftime('%Y/%m/%d %H:%M') %></h6>
               <p class="card-text"><%= group_new.body %></p>
               <% if @admin_user == current_user %>
                 <%= link_to '編集', edit_group_group_news_path(id: group_new.id, group_id: @group.id), class:"btn btn-info" %>
@@ -70,9 +70,12 @@
             </div>
           </div>
         <% end %>
-        <% if @admin_user == current_user %>
-          <%= link_to 'お知らせを投稿する', new_group_group_news_path(@group), class:"btn btn-info" %>
-        <% end %>
+        <%= paginate @group_news %>
+        <div class="text-center">
+          <% if @admin_user == current_user %>
+            <%= link_to 'お知らせを投稿する', new_group_group_news_path(@group), class:"btn btn-info" %>
+          <% end %>
+        </div>
       </div>
     </div>
     <div class="row col-12">

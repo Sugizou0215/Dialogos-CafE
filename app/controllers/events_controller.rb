@@ -34,19 +34,23 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all
+    @calender_events = Event.all #カレンダー表示用
+    @events = Event.all.page(params[:page]).reverse_order.per(10)
     @user = current_user #ユーザー情報表示用（サイドバー）
+    @genres = Genre.all #ジャンル一覧表示用
   end
 
   def edit
     @event = Event.find(params[:id])
+    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @groups = Group.where(id: @usergroups)
     @tags = @event.tags.pluck(:name) #イベントに紐づいたタグの名前のみ抽出
     @event_tags = @tags.join(" ") #抽出したタグ名を半角スペースで結合
   end
 
   def update
     @event = Event.find(params[:id])
-    if vent.update(event_params)
+    if @event.update(event_params)
       tag_list = params[:event][:tag_name].split(' ') # 入力されたタグを受け取る
       @old_tagmaps=Tagmap.where(event_id: @event.id) #編集しようとしているイベントに紐づいていた中間テーブルを@old_tagmapsに入れる
       #この時点で一旦中間テーブルのデータ消す

@@ -7,7 +7,7 @@
           <%= attachment_image_tag(group_comment.user, :user_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle ml-2 mt-2" ) %>
         </td>
         <td><%= group_comment.user.name %></td>
-        <td><%= group_comment.created_at.strftime('%Y/%m/%d') %></td>
+        <td><%= group_comment.created_at.strftime('%Y/%m/%d %H:%M') %></td>
         <td><%= group_comment.comment %></td>
         <% if group_comment.user == current_user %>
           <td>
@@ -18,9 +18,10 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate group.group_comments.page(params[:page]) %>
 <div class="form-group col-12">
   <%= form_with(model:[@group, @group_comment], remote: true) do |f| %>
     <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
-    <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
+    <%= f.submit "送信する",class:"btn btn-success mt-2 float-right mb-2" %>
   <% end %>
 </div>

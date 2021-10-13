@@ -23,12 +23,12 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @admin_user = User.find(@group.admin_user_id)
     @apply = Apply.find_by(group_id: @group.id, user_id: current_user.id)
-    @group_news = GroupNew.where(group_id: @group.id)
+    @group_news = GroupNew.where(group_id: @group.id).page(params[:page]).reverse_order.per(5)
     @group_comment = GroupComment.new
   end
 
   def index
-    @groups = Group.all
+    @groups = Group.all.page(params[:page]).reverse_order.per(10)
     @user = current_user #ユーザー情報表示用（サイドバー）
   end
 
@@ -37,8 +37,8 @@ class GroupsController < ApplicationController
   end
 
   def update
-    if @group = Group.update(group_params)
-      redirect_to group_path(@group), notice: "正常にイベント情報が変更されました。"
+    if @group.update(group_params)
+      redirect_to group_path, notice: "正常にイベント情報が変更されました。"
     else
       render "edit"
     end
