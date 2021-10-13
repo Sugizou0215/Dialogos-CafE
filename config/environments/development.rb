@@ -62,7 +62,7 @@ Rails.application.configure do
   #メール設定
   config.action_mailer.perform_caching = true
   config.action_mailer.raise_delivery_errors = true
-  # 開発環境でメールを送るためのホストの設定（Railsチュートリアル11章）
+  # 開発環境でメールを送るためのホストの設定
   host = 'samplehost'
   Rails.application.routes.default_url_options[:host] = host
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root :to => 'homes#top'
   get 'homes/about'
+  get 'homes/help'
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     passwords: 'users/passwords',
@@ -38,4 +39,8 @@ Rails.application.routes.draw do
   get "searches/user" => "searches#user"
   resources :tags, only: [:show]
   resources :genres, only: [:show]
+  resources :contacts, only: [:new, :create]
+  post 'contacts/confirm', to: 'contacts#confirm', as: 'confirm'
+  post 'contacts/back', to: 'contacts#back', as: 'back'
+  get 'done', to: 'contacts#done', as: 'done'
 end
