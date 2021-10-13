@@ -10,6 +10,8 @@
         <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんからフォローされました。</p>
       <% elsif notice.action == "join" %>
         <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんが<%= link_to notice.event.name, event_path(notice.event) %>に参加しました。</p>
+      <% elsif notice.action == "chat" %>
+        <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんからメッセージが届いています。</p>
       <% end %>
     </div>
   <% end %>

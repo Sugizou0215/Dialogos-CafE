@@ -131,4 +131,16 @@ class User < ApplicationRecord
       notification.save if notification.valid?
     end
   end
+
+  #通知機能用（チャット送信と同時に通知(EventNotice)を作成する）
+  def create_notification_chat!(current_user, user_id)
+    temp = EventNotice.where(["visiter_id = ? and visited_id = ? and action = ? ",current_user.id, user_id, 'chat'])
+    if temp.blank?
+      notification = current_user.active_event_notifications.new(
+        visited_id: user_id.pop, #user_idにはチャット相手のidが格納されているが、配列になってしまっているため、.popで取り出し
+        action: 'chat'
+      )
+      notification.save if notification.valid?
+    end
+  end
 end

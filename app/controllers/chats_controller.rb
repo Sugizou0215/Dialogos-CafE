@@ -1,7 +1,7 @@
 class ChatsController < ApplicationController
-  
+
   before_action :authenticate_user!
-  
+
   def show
     @user = User.find(params[:id])
     current_user_entries = current_user.entries.pluck(:room_id)
@@ -30,6 +30,8 @@ class ChatsController < ApplicationController
     @room = user_entries.room
     @chats = @room.chats
     @chat = Chat.new(room_id: @room.id)
+    @user_against = @chats.where.not(user_id: @user.id).pluck(:user_id).uniq #チャット相手のidを探して@user_againstに格納
+    @user.create_notification_chat!(current_user, @user_against) #models/user.rb参照：チャット送信と同時に通知作成
     render 'show'
   end
 
