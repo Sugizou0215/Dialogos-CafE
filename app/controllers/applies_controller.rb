@@ -12,7 +12,6 @@ class AppliesController < ApplicationController
 
   def destroy
     @apply = Apply.find(params[:apply_id])
-    binding.pry
     @apply.destroy
     @group = Group.find(params[:group_id])
     redirect_to group_url(@group), notice: "加入申請を取り消しました"

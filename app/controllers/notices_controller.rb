@@ -1,4 +1,7 @@
 class NoticesController < ApplicationController
+
+  before_action :authenticate_user!
+
   def index
     #current_userのイベントに紐づいた通知一覧
     @event_notices = current_user.passive_event_notifications

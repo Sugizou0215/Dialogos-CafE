@@ -5,7 +5,7 @@ class EventsController < ApplicationController
 
   def new
     @genres = Genre.all #ジャンル表示用
-    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id) #ユーザーの所属するグループ表示するため、検索して@groupsへ
     @groups = Group.where(id: @usergroups)
     @event = Event.new
   end
@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     @event_comment = EventComment.new
     @event_tags = @event.tags #タグ機能用：現在選択されているイベントに紐づいているタグを入手
     @event_group = Group.find_by(id: @event.group_id) #グループイベント表示用：現在選択されているイベントに紐づいているグループを入手
-    @group_users = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @group_users = GroupUser.where(user_id: current_user.id).pluck(:group_id) #ユーザーの所属するグループ表示するため、検索して@user_groupsへ
     @user_groups = Group.where(id: @group_users)
   end
 
@@ -43,7 +43,7 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
-    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id)
+    @usergroups = GroupUser.where(user_id: current_user.id).pluck(:group_id) #ユーザーの所属するグループ表示するため、検索して@groupsへ
     @groups = Group.where(id: @usergroups)
     @tags = @event.tags.pluck(:name) #イベントに紐づいたタグの名前のみ抽出
     @event_tags = @tags.join(" ") #抽出したタグ名を半角スペースで結合
@@ -53,19 +53,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     if @event.update(event_params)
       tag_list = params[:event][:tag_name].split(' ') # 入力されたタグを受け取る
-      @old_tagmaps=Tagmap.where(event_id: @event.id) #編集しようとしているイベントに紐づいていた中間テーブルを@old_tagmapsに入れる
-      #この時点で一旦中間テーブルのデータ消す
-      @old_tagmaps.each do |map|
-        map.delete
-      end
-      #tagの更新
-      tag_list.each do |tag_name|
-        @tag = Tag.find_or_create_by(name: tag_name) #タグを入力された内容で探し、あればそのまま、なければ新規作成
-        @tag.save
-        #再度1個づつ中間テーブルへ登録
-        new_tagmap = Tagmap.new(event_id: @event.id, tag_id: @tag.id)
-        new_tagmap.save
-      end
+      update_tags(tag_list, @event) #コントローラー下部参照
       redirect_to event_path(@event), notice: "正常にイベント情報が変更されました。"
     else
       render "edit"
@@ -120,4 +108,20 @@ class EventsController < ApplicationController
       end
     end
 
+    #タグの更新処理
+    def update_tags(tag_list, event)
+      @old_tagmaps=Tagmap.where(event_id: event.id) #編集しようとしているイベントに紐づいていた中間テーブルを@old_tagmapsに入れる
+      #この時点で一旦中間テーブルのデータを削除
+      @old_tagmaps.each do |map|
+        map.delete
+      end
+      #tagの更新
+      tag_list.each do |tag_name|
+        @tag = Tag.find_or_create_by(name: tag_name) #タグを入力された内容で探し、あればそのまま、なければ新規作成
+        @tag.save
+        #再度1個づつ中間テーブルへ登録
+        new_tagmap = Tagmap.new(event_id: @event.id, tag_id: @tag.id)
+        new_tagmap.save
+      end
+    end
 end
