@@ -1,22 +1,24 @@
-<div class="container applicant-wrapper">
-  <div class="row">
-    <h2 class="col-12 text-center pt-3">承認待ちユーザ一覧</h2>
-    <% if @applies.present? %>
-      <table class="table table-hover mx-auto col-6">
-        <% @applies.each do |app| %>
-          <tr class="text-center">
-            <td>
-              <%= link_to app.user.name, user_path(app.user), class:"user-icon" %>
-            </td>
-            <td>
-              <%= link_to "承認", group_join_path(app.group, user_id: app.user_id), method: :get, class:"btn btn-success" %>
-              <%= link_to "却下", group_leave_path(app.group, user_id: app.user_id), method: :delete, class:"btn btn-danger" %>
-            </td>
-          </tr>
-        <% end %>
-      </table>
-    <% else %>
-      <p>承認待ちユーザーはいません。</p>
-    <% end %>
+<section id="group" class="bg-light">
+  <div class="container applicant-wrapper">
+    <div class="row">
+      <h2 class="col-12 text-center pt-3">承認待ちユーザ ー一覧</h2>
+      <% if @applies.present? %>
+        <table class="table table-hover mx-auto col-6">
+          <% @applies.each do |app| %>
+            <tr class="text-center">
+              <td>
+                <%= link_to app.user.name, user_path(app.user), class:"user-icon" %>
+              </td>
+              <td>
+                <%= link_to "承認", group_join_path(app.group, user_id: app.user_id), method: :get, class:"btn btn-success" %>
+                <%= link_to "却下", group_leave_path(app.group, user_id: app.user_id), method: :delete, class:"btn btn-danger" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p>承認待ちユーザーはいません。</p>
+      <% end %>
+    </div>
   </div>
-</div>
+</section>
