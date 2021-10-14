@@ -1,12 +1,12 @@
 <section id="search" class="bg-light">
   <div class="container">
-    <div class="row">
+    <div class="row pt-3">
       <div class="col-12 mx-auto">
         <h2 class="text-center">お問い合わせ内容確認</h2>
         <table class="table col-12">
           <tbody>
             <tr>
-              <td class="text-center">お名前</td>
+              <td class="text-center col-3">お名前</td>
               <td><%= @contact.name %></td>
             </tr>
             <tr>
@@ -23,21 +23,22 @@
             </tr>
           </tbody>
         </table>
-
-        <%= form_with model:@contact, local:true do |f| %>
-          <%= f.hidden_field :name %>
-          <%= f.hidden_field :email %>
-          <%= f.hidden_field :title %>
-          <%= f.hidden_field :body %>
-          <div><%= f.submit '送信', class:"btn btn-success" %></div>
-        <% end %>
-        <%= form_with model:@contact, url:back_path, local:true do |f| %>
-          <%= f.hidden_field :name %>
-          <%= f.hidden_field :email %>
-          <%= f.hidden_field :title %>
-          <%= f.hidden_field :body %>
-          <div><%= f.submit '入力画面に戻る', class:"btn btn-info" %></div>
-        <% end %>
+        <div class="form-group text-center">
+          <%= form_with model:@contact, local:true do |f| %>
+            <%= f.hidden_field :name %>
+            <%= f.hidden_field :email %>
+            <%= f.hidden_field :title %>
+            <%= f.hidden_field :body %>
+            <div><%= f.submit '送信', class:"btn btn-success mb-2" %></div>
+          <% end %>
+          <%= form_with model:@contact, url:back_path, local:true do |f| %>
+            <%= f.hidden_field :name %>
+            <%= f.hidden_field :email %>
+            <%= f.hidden_field :title %>
+            <%= f.hidden_field :body %>
+            <div><%= f.submit '入力画面に戻る', class:"btn btn-info" %></div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

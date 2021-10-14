@@ -1,7 +1,7 @@
-<section id="search" class="bg-light">
+<section id="contact" class="bg-light">
   <%= render 'layouts/error', model: @contact %>
   <div class="container">
-    <div class="row">
+    <div class="row pt-3">
       <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
         <h2 class="text-center">お問い合わせフォーム</h2>
         <%= form_with model:@contact, url: confirm_path, local:true do |f| %>
@@ -21,7 +21,7 @@
             <%= f.label :body, 'お問い合わせ内容*' %>
             <%= f.text_area :body, rows: 10, class: 'form-control' %>
           </div>
-          <div>
+          <div class="form-group text-center">
             <%= f.submit '入力内容確認', class:"btn btn-success" %>
           </div>
         <% end %>
