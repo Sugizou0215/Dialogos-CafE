@@ -77,8 +77,11 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     #イベントが開催中の場合
     if @event.is_valid == true
-      @event.update(is_valid: false)
-      flash[:notice] = 'イベントを中止しました。イベント詳細ページから再開も可能です。'
+      if @event.update(is_valid: false)
+        flash[:notice] = 'イベントを中止しました。イベント詳細ページから再開も可能です。'
+      else
+        render 'show'
+      end
     #イベントが中止中の場合
     else
       @event.update(is_valid: true)

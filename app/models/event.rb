@@ -15,7 +15,7 @@ class Event < ApplicationRecord
 
   #開始日時・終了日時・参加締切日時のいずれかが現在時刻より前になるとエラー
   def after_now
-    if start_at > Time.current || finish_at > Time.current  || deadline > Time.current
+    if start_at < Time.current || finish_at < Time.current  || deadline < Time.current
       errors.add(:base, "開始日時・終了日時・参加締切日時のいずれかが現在時刻より前になっています。")
     end
   end
