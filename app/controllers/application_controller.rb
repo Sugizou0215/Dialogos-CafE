@@ -16,7 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   #例外処理
-
   class Forbidden < ActionController::ActionControllerError; end
   class IpAddressRejected < ActionController::ActionControllerError; end
 
