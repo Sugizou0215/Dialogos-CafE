@@ -1,7 +1,6 @@
 class GroupsController < ApplicationController
-
   before_action :authenticate_user!, except: [:index]
-  before_action :ensure_admin_user, only: [:edit, :update] #主催者以外はedit,updateできなくする
+  before_action :ensure_admin_user, only: %i[edit update] # 主催者以外はedit,updateできなくする
 
   def new
     @group = Group.new
@@ -29,7 +28,7 @@ class GroupsController < ApplicationController
 
   def index
     @groups = Group.all.page(params[:page]).reverse_order.per(10)
-    @user = current_user #ユーザー情報表示用（サイドバー）
+    @user = current_user # ユーザー情報表示用（サイドバー）
   end
 
   def edit
@@ -38,13 +37,13 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update(group_params)
-      redirect_to group_path, notice: "正常にイベント情報が変更されました。"
+      redirect_to group_path, notice: '正常にイベント情報が変更されました。'
     else
-      render "edit"
+      render 'edit'
     end
   end
 
-  #参加申請を許可すると、GroupUserレコードを生成し、該当のapplyレコードを削除する
+  # 参加申請を許可すると、GroupUserレコードを生成し、該当のapplyレコードを削除する
   def join
     @group = Group.find(params[:group_id])
     @user = User.find(params[:user_id])
@@ -52,11 +51,11 @@ class GroupsController < ApplicationController
     @group.users << User.find(params[:user_id])
     @apply.destroy!
     flash[:notice] = '参加を承認しました。'
-    @user.create_notification_approval!(@user, params[:group_id]) #models/user.rb参照：グループ参加申請と同時に通知作成
-    redirect_to  group_path(@group)
+    @user.create_notification_approval!(@user, params[:group_id]) # models/user.rb参照：グループ参加申請と同時に通知作成
+    redirect_to group_path(@group)
   end
 
-  #参加申請を却下すると、該当のapplyレコードを削除する
+  # 参加申請を却下すると、該当のapplyレコードを削除する
   def leave
     @apply = Apply.find_by(params[:group_id], params[:user_id])
     @apply.destroy!
@@ -66,14 +65,12 @@ class GroupsController < ApplicationController
 
   private
 
-    def group_params
-      params.require(:group).permit(:name, :introduction, :group_image)
-    end
+  def group_params
+    params.require(:group).permit(:name, :introduction, :group_image)
+  end
 
-    def ensure_admin_user
-      @group = Group.find(params[:id])
-      unless @group.admin_user_id == current_user.id
-        redirect_to group_path(@group)
-      end
-    end
+  def ensure_admin_user
+    @group = Group.find(params[:id])
+    redirect_to group_path(@group) unless @group.admin_user_id == current_user.id
+  end
 end

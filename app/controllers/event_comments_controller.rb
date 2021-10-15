@@ -1,5 +1,4 @@
 class EventCommentsController < ApplicationController
-
   before_action :authenticate_user!
 
   def create
@@ -8,7 +7,7 @@ class EventCommentsController < ApplicationController
     @event_comment.event_id = @event.id
     @comment_event = @event_comment.event
     if @event_comment.save
-      #通知の作成
+      # 通知の作成
       @comment_event.create_notification_comment!(current_user, @event_comment)
     end
   end
@@ -21,7 +20,7 @@ class EventCommentsController < ApplicationController
 
   private
 
-    def event_comment_params
-      params.require(:event_comment).permit(:comment)
-    end
+  def event_comment_params
+    params.require(:event_comment).permit(:comment)
+  end
 end

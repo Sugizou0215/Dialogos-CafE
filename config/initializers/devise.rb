@@ -308,22 +308,20 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
-  
+
   # メールを送信するアドレス
-  config.mailer_sender = ENV["GOOGLE_MAIL_ADDRESS"]
-  
+  config.mailer_sender = ENV['GOOGLE_MAIL_ADDRESS']
+
   # パスワード再設定するためのキーカラム。
   config.reset_password_keys = [:email]
 
   # リセットパスワードキーを使ってパスワードをリセットできる時間間隔を6時間に設定
   config.reset_password_within = 6.hours
 
-  #既定値はtrueで, リセットされた後に自動的にサインインする。
+  # 既定値はtrueで, リセットされた後に自動的にサインインする。
   config.sign_in_after_reset_password = true
-  
+
   require 'devise/orm/active_record'
   # 環境変数にID、シークレットを入れる
   config.omniauth :google_oauth2, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], skip_jwt: true # skip_jwt: true を追記
-
 end
-
