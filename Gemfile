@@ -77,3 +77,5 @@ gem 'dotenv-rails'
 gem 'omniauth-rails_csrf_protection'
 gem 'kaminari'
 gem 'rails-i18n'
+gem 'rubocop', require:false
+gem 'rubocop-rails', require:false
