@@ -1,20 +1,19 @@
 class AppliesController < ApplicationController
-
   before_action :authenticate_user!
 
   def create
     current_user.applies.create(group_id: apply_params[:group_id])
     @group = Group.find(params[:group_id])
     @user = User.find(@group.admin_user_id)
-    @user.create_notification_join!(current_user, params[:group_id]) #models/user.rb参照：グループ参加申請と同時に通知作成
-    redirect_to group_path(apply_params[:group_id]), notice: "加入申請しました"
+    @user.create_notification_join!(current_user, params[:group_id]) # models/user.rb参照：グループ参加申請と同時に通知作成
+    redirect_to group_path(apply_params[:group_id]), notice: '加入申請しました'
   end
 
   def destroy
     @apply = Apply.find(params[:apply_id])
     @apply.destroy
     @group = Group.find(params[:group_id])
-    redirect_to group_url(@group), notice: "加入申請を取り消しました"
+    redirect_to group_url(@group), notice: '加入申請を取り消しました'
   end
 
   def index
@@ -23,7 +22,7 @@ class AppliesController < ApplicationController
 
   private
 
-    def apply_params
-      params.permit(:group_id)
-    end
+  def apply_params
+    params.permit(:group_id)
+  end
 end

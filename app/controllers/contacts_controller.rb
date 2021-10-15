@@ -6,9 +6,7 @@ class ContactsController < ApplicationController
   # 確認画面を表示
   def confirm
     @contact = Contact.new(contact_params)
-    if @contact.invalid?
-      render :new
-    end
+    render :new if @contact.invalid?
   end
 
   # 入力内容に誤りがあった場合、入力内容を保持したまま確認ページから前のページに戻る
@@ -28,8 +26,7 @@ class ContactsController < ApplicationController
   end
 
   # 送信完了画面を表示
-  def done
-  end
+  def done; end
 
   private
 

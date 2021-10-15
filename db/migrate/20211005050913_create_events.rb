@@ -9,7 +9,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.datetime :deadline
       t.integer :capacity
       t.text :tool
-      t.boolean :is_valid,     default: true #中止ステータス用、中止するとfalseへ
+      t.boolean :is_valid, default: true # 中止ステータス用、中止するとfalseへ
       t.string :event_image_id
       t.integer :admin_user_id
       t.integer :group_id

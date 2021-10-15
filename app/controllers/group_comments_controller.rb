@@ -1,5 +1,4 @@
 class GroupCommentsController < ApplicationController
-
   before_action :authenticate_user!
 
   def create
@@ -8,7 +7,7 @@ class GroupCommentsController < ApplicationController
     @group_comment.group_id = @group.id
     @comment_group = @group_comment.group
     if @group_comment.save
-      #通知の作成
+      # 通知の作成
       @comment_group.create_notification_comment!(current_user, @group_comment)
       # redirect_to group_path(group)
     end
@@ -23,7 +22,7 @@ class GroupCommentsController < ApplicationController
 
   private
 
-    def group_comment_params
-      params.require(:group_comment).permit(:comment)
-    end
+  def group_comment_params
+    params.require(:group_comment).permit(:comment)
+  end
 end
