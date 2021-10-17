@@ -9,7 +9,6 @@ class GroupCommentsController < ApplicationController
     if @group_comment.save
       # 通知の作成
       @comment_group.create_notification_comment!(current_user, @group_comment)
-      # redirect_to group_path(group)
     end
   end
 
@@ -17,7 +16,6 @@ class GroupCommentsController < ApplicationController
     @group = Group.find(params[:group_id])
     @group_comment = @group.group_comments.find(params[:id])
     @group_comment.destroy
-    # redirect_to group_path(params[:group_id])
   end
 
   private

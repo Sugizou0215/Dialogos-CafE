@@ -10,7 +10,6 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.admin_user_id = current_user.id
     @group.users << current_user
-    binding.pry
     if @group.save
       redirect_to groups_path, notice: 'グループ作成に成功しました'
     else

@@ -106,7 +106,7 @@ class User < ApplicationRecord
   end
 
   # 通知機能用（グループ参加申請と同時に通知(EventNotice)を作成する）
-  def create_notification_join!(current_user, group_id)
+  def create_notification_apply!(current_user, group_id)
     temp = GroupNotice.where(['visiter_id = ? and visited_id = ? and action = ? ', current_user.id, id, 'join'])
     if temp.blank?
       notification = current_user.active_group_notifications.new(

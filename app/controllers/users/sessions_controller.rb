@@ -12,8 +12,6 @@ class Users::SessionsController < Devise::SessionsController
     if @user
       # 入力されたパスワードが正しく、かつactive_for_authentication?メソッドがfalseである（＝is_validがfalse：退会済み)場合
       if @user.valid_password?(params[:user][:password]) && (@user.active_for_authentication? == false)
-
-        binding.pry
         flash[:error] = '退会済みです。再度ご登録をしてご利用ください。'
         redirect_to new_user_session_path
       else
