@@ -79,3 +79,7 @@ gem 'refile-mini_magick'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'simple_calendar', '~> 2.0'
+
+group :production do
+  gem 'mysql2'
+end
