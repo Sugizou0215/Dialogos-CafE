@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DialogosCafe</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <% if user_signed_in? %>
+      <%= render 'layouts/header' %>
+    <% end %>
+    <%= render 'layouts/flash'%>
+    <%= yield %>
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

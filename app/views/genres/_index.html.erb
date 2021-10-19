@@ -1,0 +1,11 @@
+<section id="event" class="bg-light">
+  <div class="container">
+    <div class='row'>
+      <% genres.each do |genre| %>
+        <ul>
+          <li><%= link_to genre.name, genre_path(genre) %></li>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</section>

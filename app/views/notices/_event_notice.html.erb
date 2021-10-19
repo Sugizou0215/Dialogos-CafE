@@ -1,0 +1,18 @@
+<div>
+  <% event_notices.each do |notice| %>
+    <div class="border-bottom mb-2">
+      <%= link_to user_path(notice.visiter) do %>
+        <%= attachment_image_tag notice.visiter, :user_image, :fill,100,100, format: "jpeg", fallback: "no-image.jpg", size: "50x50", class:"profile-img-circle" %>
+      <% end %>
+      <% if notice.action == "comment" %>
+        <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんが<%= link_to notice.event.name, event_path(notice.event) %>にコメントしました。</p>
+      <% elsif notice.action == "follow" %>
+        <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんからフォローされました。</p>
+      <% elsif notice.action == "join" %>
+        <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんが<%= link_to notice.event.name, event_path(notice.event) %>に参加しました。</p>
+      <% elsif notice.action == "chat" %>
+        <p><%= link_to notice.visiter.name, user_path(notice.visiter) %>さんからメッセージが届いています。</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

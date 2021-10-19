@@ -1,0 +1,61 @@
+<section id="event" class="bg-light">
+  <%= render 'layouts/error', model: @event %>
+  <div class="container">
+    <div class ="row justify-content-center pt-3">
+      <h1 class="col-12 text-center">イベント編集</h1>
+      <div class="col-6">
+        <%= form_with model:@event, local:true do |f| %>
+          <div class="form-group">
+            <%= f.label :イベント名 %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :イベント概要 %>
+            <%= f.text_area :introduction, rows: 3, class: "form-control" %>
+          </div>
+          <div class="form-select">
+            <%= f.label :ジャンル選択 %>
+            <%= f.collection_select( :genre_id, Genre.all, :id, :name, {} ,{:class => "form-control"}) %>
+          </div>
+          <div class="form-group">
+            <%= f.label :開始日時 %>
+            <%= f.datetime_field :start_at, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :終了日時 %>
+            <%= f.datetime_field :finish_at, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :参加締切日時 %>
+            <%= f.datetime_field :deadline, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :参加定員 %>
+            <%= f.text_field :capacity, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :使用ツール（オフラインの場合は開催場所を記載して下さい） %>
+            <%= f.text_field :tool, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :タグ（半角スペースで区切るで複数のタグを付けることができます。） %>
+            <%= f.text_field :tag_name, class: "form-control", value: @tags %>
+          </div>
+          <div class="form-group">
+            <%= f.label :イベントイメージ %>
+            <%= f.attachment_field :event_image, class: "form-control-file event_image" %>
+          </div>
+          <% if @groups %>
+            <div class="form-group">
+              <%= f.label :グループ（選択すると該当グループメンバーのみが参加できます）  %>
+              <%= f.collection_select( :group_id, @groups.all, :id, :name, { include_blank: 'グループなし'} ,{:class => "form-control"}) %>
+            </div>
+          <% end %>
+          <div class="form-group text-center">
+            <%= f.submit '編集する',class: 'btn btn-secondary' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

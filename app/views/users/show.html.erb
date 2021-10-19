@@ -1,0 +1,63 @@
+<section id="user" class="bg-light">
+  <div class="container">
+    <div class='row'>
+      <%= render 'user_info',user: @user %>
+      <div class='col-9 mt-3'>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a href="#tab1" class="nav-link active" data-toggle="tab">イベント</a>
+          </li>
+          <li class="nav-item">
+            <a href="#tab2" class="nav-link text-dark" data-toggle="tab">グループ</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div id="tab1" class="tab-pane active">
+            <h2 class="mt-2 border-bottom">参加予定のイベント一覧</h2>
+            <% if @before_join_events.empty? %>
+              <p>参加予定のイベントはありません。</p>
+            <% else %>
+              <div class="col-12 mt-2">
+                <%= render 'events/index',events: @before_join_events %>
+              </div>
+            <% end %>
+            <h2 class="mt-2 border-bottom">ブックマークしたイベント一覧</h2>
+            <% if @bookmark_events.empty? %>
+              <p>ブックマークしているイベントはありません。</p>
+            <% else %>
+              <div class="col-12 mt-2">
+                <%= render 'events/index',events: @bookmark_events %>
+              </div>
+            <% end %>
+            <h2 class="mt-2 border-bottom">過去に参加したイベント一覧</h2>
+            <% if @after_join_events.empty? %>
+              <p>過去に参加したイベントはありません。</p>
+            <% else %>
+              <div class="col-12 mt-2">
+                <%= render 'events/index',events: @after_join_events %>
+              </div>
+            <% end %>
+          </div>
+          <div id="tab2" class="tab-pane">
+            <h2 class="mt-2 border-bottom">所属しているグループ一覧</h2>
+            <% if @join_groups.empty? %>
+              <p>所属しているグループはありません。</p>
+            <% else %>
+              <div class="col-12 mt-2">
+                <%= render 'groups/index',groups: @join_groups %>
+              </div>
+            <% end %>
+            <h2 class="mt-2 border-bottom">参加申請中のグループ一覧</h2>
+            <% if @apply_groups.empty? %>
+              <p>参加申請中のグループはありません。</p>
+            <% else %>
+              <div class="col-12 mt-2">
+                <%= render 'groups/index',groups: @apply_groups %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

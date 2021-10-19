@@ -1,0 +1,40 @@
+<header>
+  <% if current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0">
+  <% else %>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 bg-dark">
+  <% end %>
+    <div class="container-fluid">
+      <% if user_signed_in? %>
+        <%= link_to image_tag('logo1_negate.png', size: "100x85"), user_path(current_user), class: 'navbar-brand' %>
+      <% else %>
+        <a class="navbar-brand" href="/"><span><%= image_tag 'logo1_negate.png', size: "100x85" %></span></a>
+      <% end %>
+      <!--ハンバーガーメニュー-->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+        <% if user_signed_in? %>
+          <li><%= link_to ' マイページ', user_path(current_user), class: 'fas fa-home nav-link text-light' %></li>
+          <% if unchecked_notifications.any? %> <%# helper/notices_helper.rb参照%>
+            <i class="fa fa-circle" style="color: gold;"></i>
+          <% end %>
+          <li>
+            <%= link_to " 通知", user_notices_path(current_user), class: 'fas fa-exclamation nav-link text-light' %>
+          </li>
+          <li><%= link_to ' イベント一覧', events_path , class: 'fas fa-comments nav-link text-light'%></li>
+          <li><%= link_to ' グループ一覧', groups_path, class: 'fas fa-users nav-link text-light' %></li>
+          <li><%= link_to ' ログアウト', destroy_user_session_path, method: :delete, class: 'fas fa-sign-out-alt nav-link text-light' %></li>
+        <% else %>
+          <li><%= link_to ' Home', root_path, class: 'fas fa-home nav-link text-light' %></li>
+          <li><%= link_to ' About', homes_about_path, class: 'fas fa-link nav-link text-light' %></li>
+          <li><%= link_to ' 新規登録', new_user_registration_path, class: 'fas fa-user-plus nav-link text-light' %></li>
+          <li><%= link_to ' ログイン', new_user_session_path , class: 'fas fa-sign-in-alt nav-link text-light'%></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

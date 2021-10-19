@@ -1,0 +1,113 @@
+<section id="event" class="bg-light">
+  <%= render 'layouts/error', model: @event %>
+  <div class="container">
+    <div class ="row pt-3">
+      <h2 class="col-11">
+        イベント詳細
+        <small>
+          <% if @event.deadline < Time.now %>
+            <i class="fas fa-exclamation-circle"></i>このイベントはすでに参加が締め切られています。
+          <% elsif @event.is_valid == false %>
+            <i class="fas fa-exclamation-circle"></i>このイベントの開催は中止されています。
+          <% elsif @event.users.count >= @event.capacity %>
+            <i class="fas fa-exclamation-circle"></i>このイベントはすでに定員に達しています。
+          <% elsif @event.users.include?(current_user) %>
+            <i class="fas fa-exclamation-circle"></i>このイベントに参加予定です。
+          <% end %>
+        </small>
+      </h2>
+      <h4 class="text-right col-1" id="bookmark">
+        <%= render 'bookmarks/bookmark', event: @event %>
+      </h4>
+      <table class="col-12 table table-striped table-condensed">
+        <tr>
+          <td>
+            <%= attachment_image_tag(@event, :event_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>イベント名</td>
+          <td><%= @event.name %></td>
+        </tr>
+        <tr>
+          <td>開催日時</td>
+          <td><%= event_time(@event) %></td>
+        </tr>
+        <tr>
+          <td>参加締め切り日時</td>
+          <td><%= @event.deadline.strftime('%Y/%m/%d %H:%M') %></td>
+        </tr>
+        <tr>
+          <td>参加定員</td>
+          <td><%= @event.capacity %>人(現在<%= @event.users.count %>人が参加中)</td>
+        </tr>
+        <tr>
+          <td>使用ツール</td>
+          <td><%= @event.tool %></td>
+        </tr>
+        <tr>
+          <td>タグ</td>
+          <td>
+            <% @event_tags.each do |tag| %>
+              <li class="btn btn-dark"><%= link_to tag.name, tag_path(tag.id), class:"text-white" %></li>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td>イベント主催者</td>
+          <td><%= link_to @admin_user.name, user_path(@admin_user) %></td>
+        </tr>
+        <% if @admin_user == current_user %>
+          <tr>
+            <td>イベント参加者</td>
+            <td>
+              <% @event.users.each do |member| %>
+                <li><%= link_to member.name, user_path(member) %><br></li>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if @event_group %>
+          <tr>
+            <td>グループ</td>
+            <td>このイベントは<%= link_to @event_group.name, group_path(@event_group) %>のメンバーのみ参加できます。</td>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+      <div class="mx-auto">
+        <% if user_signed_in? %>
+          <% if @admin_user == current_user %>
+            <%= link_to '編集する', edit_event_path, class: 'btn btn-info' %>
+            <% if @event.is_valid == true %>
+              <%= link_to '中止する', cancel_event_path, class: 'btn btn-danger', method: :patch %>
+            <% else %>
+              <%= link_to '再開する', cancel_event_path, class: 'btn btn-success', method: :patch %>
+            <% end %>
+          <% else %>
+            <% if @event.users.include?(current_user) %>
+              <%= link_to '参加を取り消す', event_leave_path(@event), method: :delete, class: 'btn btn-danger' %>
+            <% else %>
+              <% unless @event.deadline < Time.now || @event.is_valid == false || @event.users.count >= @event.capacity %>
+                <% if @user_groups.include?(@event_group) %>
+                  参加するには、<%= link_to @event_group.name, group_path(@event_group) %>に参加してください。
+                <% else %>
+                  <%= link_to '参加する', event_join_path(@event), class: 'btn btn-success'%>
+                <% end %>
+              <% else %>
+                <p><i class="fas fa-exclamation-circle"></i>このイベントには参加できません。</p>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <%#コメント機能呼び出し%>
+      <div id="event_comments" class="col-12">
+        <%= render 'event_comments/index', event: @event %>
+      </div>
+    </div>
+  </div>
+</section>
