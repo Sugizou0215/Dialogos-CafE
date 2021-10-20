@@ -1,0 +1,16 @@
+# SNS認証用
+CLIENT_ID=421825149815-jndpgfpdijhsgmgn1elmud97durb4u06.apps.googleusercontent.com
+CLIENT_SECRET=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
+
+#パスワード再設定用(devise)
+GOOGLE_MAIL_ADDRESS=dialogoscafeowner@gmail.com
+GOOGLE_MAILER_PASSWORD=movmsmuwxkrewgrs
+
+#問い合わせ用
+TOMAIL=dialogoscafeowner@gmail.com
+
+#デプロイ用
+DB_USERNAME="sugizou0215"
+DB_PASSWORD="sugizou2"
+DB_HOST="rds-mysql-server.cgt0astw8lt4.ap-northeast-1.rds.amazonaws.com"
+DB_DATABASE="Dialogos_CafE"
