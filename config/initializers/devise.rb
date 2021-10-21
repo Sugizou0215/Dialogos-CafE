@@ -321,7 +321,6 @@ Devise.setup do |config|
   # 既定値はtrueで, リセットされた後に自動的にサインインする。
   config.sign_in_after_reset_password = true
 
-  require 'devise/orm/active_record'
   # 環境変数にID、シークレットを入れる
-  config.omniauth :google_oauth2, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], skip_jwt: true # skip_jwt: true を追記
+  config.omniauth :google_oauth2, ENV['CLIENT_ID'], ENV['CLIENT_SECRET'], skip_jwt: true
 end
