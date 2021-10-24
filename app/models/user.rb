@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   # バリデーション
-  validates :name, length: { minimum: 1 }
+  validates :name, length: { minimum: 1 , maximum: 20 } , uniqueness: true
 
   # アソシエーション
   # フォロー機能用：Relationship参照

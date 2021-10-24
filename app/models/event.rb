@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   # バリデーション
-  validates :name, length: { minimum: 1, maximum: 50 }
+  validates :name, length: { minimum: 1 , maximum: 50 }
   validates :introduction, presence: true
   validates :genre_id, presence: true
   validates :start_at, presence: true
