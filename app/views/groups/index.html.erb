@@ -2,7 +2,7 @@
   <div class="container">
     <div class='row'>
       <%= render 'users/user_info',user: @user %>
-      <div class='col-9 mt-3'>
+      <div class='col-lg-9 col-md-12 mt-3'>
         <div class="input-group form-inline">
           <h2 class="col-8">グループ一覧</h2>
           <%= form_with url:searches_group_path, method: :get, local: true do |f| %>
