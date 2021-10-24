@@ -1,3 +1,6 @@
+<% unless user_signed_in? %>
+  <%= render 'layouts/header' %>
+<% end %>
 <section id="contact" class="bg-light">
   <%= render 'layouts/error', model: @contact %>
   <div class="container">

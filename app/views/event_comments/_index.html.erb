@@ -23,6 +23,6 @@
 <div class="form-group col-12">
   <%= form_with(model:[event, @event_comment], remote: true) do |f| %>
     <%= f.text_area :comment, rows:'3',placeholder: "コメントをここに",class:"form-control" %>
-    <%= f.submit "送信する",class:"btn btn-success mt-2 float-right" %>
+    <%= f.submit "送信する",class:"btn btn-success mt-2 float-right mb-3" %>
   <% end %>
 </div>
