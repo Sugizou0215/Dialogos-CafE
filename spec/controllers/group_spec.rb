@@ -4,6 +4,7 @@ RSpec.describe GroupsController, type: :controller do
 
   context 'ログインしている場合' do
     let(:user) { create(:user) }
+    let(:another_user) { create(:user) }
 
     describe "group#indexのテスト" do
 
@@ -104,12 +105,66 @@ RSpec.describe GroupsController, type: :controller do
         expect(response).to redirect_to new_group_path
       end
     end
+
+    describe "groups#editのテスト" do
+      let(:group) { create(:group, admin_user_id: user.id) }
+
+      it "groups#editが正常に作動しているか" do
+        sign_in user
+        get :edit, params: {id: group.id}
+        expect(response).to be_success
+      end
+
+      it "groups#editへのアクセスに対して正常なレスポンスが返ってきているか" do
+        sign_in user
+        get :edit, params: {id: group.id}
+        expect(response).to have_http_status "200"
+      end
+
+      it "グループ作成者以外が編集ページに遷移できず、グループ詳細ページに遷移しているか" do
+        sign_in another_user
+        get :edit, params: {id: group.id}
+        expect(response).to redirect_to group_path(group)
+      end
+    end
+
+    describe "groups#updateのテスト" do
+      let(:group) { create(:group, admin_user_id: user.id) }
+
+      it "正常にupdateできるか" do
+        sign_in user
+        group_params = {name: "編集テスト"}
+        patch :update, params: {id: group.id, group: group_params}
+        expect(group.reload.name).to eq "編集テスト"
+      end
+
+      it "正常にupdate後、編集したgroupの詳細ページに遷移するか" do
+        sign_in user
+        group_params = {name: "編集テスト"}
+        patch :update, params: {id: group.id, group: group_params}
+        expect(response).to redirect_to group_path(group)
+      end
+      
+      it "不正な値でグループが更新できないか" do
+        sign_in user
+        group_params = {name: nil}
+        patch :update, params: {id: group.id, group: group_params}
+        expect(group.reload.name).to_not eq nil
+      end
+      
+      it "不正な値でグループが更新しようとすると、再度編集ページに遷移するか" do
+        sign_in user
+        group_params = {name: nil}
+        patch :update, params: {id: group.id, group: group_params}
+        expect(response).to redirect_to edit_group_path
+      end
+    end
   end
 
   context "ログインしていない場合" do
-    describe "groups#showのテスト" do
+    let(:user) { create(:user) }
 
-      let(:user) { create(:user) }
+    describe "groups#showのテスト" do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "groups#showが正常に作動していないか" do
@@ -135,10 +190,8 @@ RSpec.describe GroupsController, type: :controller do
         expect(response).to redirect_to "/users/sign_in"
       end
     end
-    
+
     describe "groups#createのテスト" do
-      
-      let(:user) { create(:user) }
 
       it "groups#createが正常に作動していないか" do
         expect {
@@ -160,6 +213,20 @@ RSpec.describe GroupsController, type: :controller do
             admin_user_id: user.id
           }
         }
+        expect(response).to redirect_to "/users/sign_in"
+      end
+    end
+
+    describe "groups#newのテスト" do
+      let(:group) { create(:group, admin_user_id: user.id) }
+
+      it "groups#editが正常に作動していないか" do
+        get :edit, params: {id: group.id}
+        expect(response).to_not be_success
+      end
+
+      it "ログイン画面にリダイレクトされているか" do
+        get :edit, params: {id: group.id}
         expect(response).to redirect_to "/users/sign_in"
       end
     end
