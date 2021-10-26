@@ -16,7 +16,7 @@ class EventsController < ApplicationController
     tag_list = params[:event][:tag_name].split(nil) # タグ機能用
     if @event.save
       @event.save_tag(tag_list)
-      redirect_to events_path, notice: 'イベント作成に成功しました'
+      redirect_to event_path(@event), notice: 'イベント作成に成功しました'
     else
       render :new
     end

@@ -6,16 +6,18 @@ RSpec.describe GroupsController, type: :controller do
     let(:user) { create(:user) }
     let(:another_user) { create(:user) }
 
+    before do
+      sign_in user
+    end
+
     describe "group#indexのテスト" do
 
       it "groups#indexが正常に作動しているか" do
-        sign_in user
         get :index
         expect(response).to be_success
       end
 
       it "indexへのアクセスに対して正常なレスポンスが返ってきているか" do
-        sign_in user
         get :index
         expect(response).to have_http_status "200"
       end
@@ -25,13 +27,11 @@ RSpec.describe GroupsController, type: :controller do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "groups#showが正常に作動しているか" do
-        sign_in user
         get :show, params: {id: group.id}
         expect(response).to be_success
       end
 
       it "groups#showへのアクセスに対して正常なレスポンスが返ってきているか" do
-        sign_in user
         get :show, params: {id: group.id}
         expect(response).to have_http_status "200"
       end
@@ -41,13 +41,11 @@ RSpec.describe GroupsController, type: :controller do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "groups#newが正常に作動しているか" do
-        sign_in user
         get :new
         expect(response).to be_success
       end
 
       it "groups#newへのアクセスに対して正常なレスポンスが返ってきているか" do
-        sign_in user
         get :new
         expect(response).to have_http_status "200"
       end
@@ -56,7 +54,6 @@ RSpec.describe GroupsController, type: :controller do
     describe "groups#createのテスト" do
 
       it "正常にグループを作成できるか" do
-        sign_in user
         expect {
           post :create, params: {
             group: {
@@ -69,7 +66,6 @@ RSpec.describe GroupsController, type: :controller do
       end
 
       it "グループ作成後の作成したグループの詳細ページに遷移しているか" do
-        sign_in user
         post :create, params: {
           group: {
               name: "テストグループ",
@@ -81,7 +77,6 @@ RSpec.describe GroupsController, type: :controller do
       end
 
       it "不正な値でグループが作成できないか" do
-        sign_in user
         expect {
           post :create, params: {
             group: {
@@ -94,7 +89,6 @@ RSpec.describe GroupsController, type: :controller do
       end
 
       it "不正な値でグループが作成しようとすると、作成ページに遷移するか" do
-        sign_in user
         post :create, params: {
           group: {
             name: nil,
@@ -110,13 +104,11 @@ RSpec.describe GroupsController, type: :controller do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "groups#editが正常に作動しているか" do
-        sign_in user
         get :edit, params: {id: group.id}
         expect(response).to be_success
       end
 
       it "groups#editへのアクセスに対して正常なレスポンスが返ってきているか" do
-        sign_in user
         get :edit, params: {id: group.id}
         expect(response).to have_http_status "200"
       end
@@ -132,28 +124,24 @@ RSpec.describe GroupsController, type: :controller do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "正常にupdateできるか" do
-        sign_in user
         group_params = {name: "編集テスト"}
         patch :update, params: {id: group.id, group: group_params}
         expect(group.reload.name).to eq "編集テスト"
       end
 
       it "正常にupdate後、編集したgroupの詳細ページに遷移するか" do
-        sign_in user
         group_params = {name: "編集テスト"}
         patch :update, params: {id: group.id, group: group_params}
         expect(response).to redirect_to group_path(group)
       end
-      
+
       it "不正な値でグループが更新できないか" do
-        sign_in user
         group_params = {name: nil}
         patch :update, params: {id: group.id, group: group_params}
         expect(group.reload.name).to_not eq nil
       end
-      
+
       it "不正な値でグループが更新しようとすると、再度編集ページに遷移するか" do
-        sign_in user
         group_params = {name: nil}
         patch :update, params: {id: group.id, group: group_params}
         expect(response).to redirect_to edit_group_path
