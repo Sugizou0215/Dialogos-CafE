@@ -5,7 +5,8 @@ RSpec.describe 'Eventモデルのテスト', type: :model do
     subject { event.valid? }
 
     let(:user) { create(:user) }
-    let!(:event) { build(:event, admin_user_id: user.id, is_valid: true ) }
+    let(:genre) { create(:genre) }
+    let!(:event) { build(:event, admin_user_id: user.id, is_valid: true, genre_id: genre.id ) }
 
     context 'nameカラム' do
       it '空欄でないこと' do
