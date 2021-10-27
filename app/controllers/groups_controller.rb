@@ -11,9 +11,9 @@ class GroupsController < ApplicationController
     @group.admin_user_id = current_user.id
     @group.users << current_user
     if @group.save
-      redirect_to groups_path, notice: 'グループ作成に成功しました'
+      redirect_to group_path(@group), notice: 'グループ作成に成功しました'
     else
-      render :new
+      render 'new'
     end
   end
 

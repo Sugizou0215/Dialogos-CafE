@@ -24,7 +24,7 @@ class GroupNewsController < ApplicationController
   end
 
   def update
-    if @group_new = GroupNew.update(group_new_params)
+    if GroupNew.update(group_new_params)
       redirect_to group_path(params[:group_id]), notice: 'お知らせを編集しました'
     else
       render 'edit'

@@ -1,0 +1,9 @@
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Documentation:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 30
+MethodLength:
+  CountComments: false
+  Max: 15
