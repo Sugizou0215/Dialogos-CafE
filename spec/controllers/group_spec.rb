@@ -168,7 +168,7 @@ RSpec.describe GroupsController, type: :controller do
 
     describe "groups#newのテスト" do
 
-      it "groups#showが正常に作動していないか" do
+      it "groups#newが正常に作動していないか" do
         get :new
         expect(response).to_not be_success
       end
@@ -205,7 +205,7 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
 
-    describe "groups#newのテスト" do
+    describe "groups#editのテスト" do
       let(:group) { create(:group, admin_user_id: user.id) }
 
       it "groups#editが正常に作動していないか" do
