@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :rescue404
   rescue_from ActionController::RoutingError, with: :rescue404
-  rescue_from Exception, with: :rescue500
+  # rescue_from Exception, with: :rescue500
   rescue_from Forbidden, with: :rescue403
   rescue_from IpAddressRejected, with: :rescue403
 
@@ -32,14 +32,14 @@ class ApplicationController < ActionController::Base
     render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
   end
 
-  def rescue500(error)
-    @exception = error
-    render file: Rails.root.join('public/500.html'), status: 404, layout: false, content_type: 'text/html'
-  end
+  # def rescue500(error)
+  #   @exception = error
+  #   render file: Rails.root.join('public/500.html'), status: 500, layout: false, content_type: 'text/html'
+  # end
 
   def rescue403(error)
     @exception = error
-    render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
+    render file: Rails.root.join('public/404.html'), status: 403, layout: false, content_type: 'text/html'
   end
 
   protected

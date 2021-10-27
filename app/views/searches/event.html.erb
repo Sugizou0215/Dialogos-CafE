@@ -10,22 +10,8 @@
             <%= f.submit "検索", class:"btn btn-outline-secondary border-0 d-inline" %>
           <% end %>
         </div>
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-              <a href="#tab1" class="nav-link active" data-toggle="tab">カレンダー</a>
-          </li>
-          <li class="nav-item">
-              <a href="#tab2" class="nav-link" data-toggle="tab">一覧</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div id="tab1" class="tab-pane active">
-            <%= render 'events/calender',events: @events %>
-          <div id="tab2" class="tab-pane">
-            <div class="col-12 mt-2">
-              <%= render 'events/index',events: @events %>
-            </div>
-          </div>
+        <div class="col-12 mt-2">
+          <%= render 'events/index',events: @events %>
         </div>
       </div>
     </div>

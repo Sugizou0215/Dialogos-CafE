@@ -22,13 +22,17 @@
       <table class="col-12 table table-striped table-condensed">
         <tr>
           <td>
-            <%= attachment_image_tag(@event, :event_image, :fill, 50, 50, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
+            <%= attachment_image_tag(@event, :event_image, fallback: "no-image-icon.jpg", size: "100x100", class:"rounded-circle" ) %>
           </td>
           <td></td>
         </tr>
         <tr>
           <td>イベント名</td>
           <td><%= @event.name %></td>
+        </tr>
+        <tr>
+          <td>イベント概要</td>
+          <td><%= @event.introduction %></td>
         </tr>
         <tr>
           <td>開催日時</td>

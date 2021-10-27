@@ -19,15 +19,15 @@
           </div>
           <div class="form-group">
             <%= f.label :start_at, '開始日時*' %>
-            <%= f.datetime_field :start_at, class: "form-control" %>
+            <%= f.datetime_field :start_at, class: "form-control", value: Time.current.strftime('%Y-%m-%dT00:00:00') %>
           </div>
           <div class="form-group">
             <%= f.label :finish_at, '終了日時*' %>
-            <%= f.datetime_field :finish_at, class: "form-control" %>
+            <%= f.datetime_field :finish_at, class: "form-control", value: Time.current.strftime('%Y-%m-%dT00:00:00') %>
           </div>
           <div class="form-group">
             <%= f.label :deadline, '参加締切日時*' %>
-            <%= f.datetime_field :deadline, class: "form-control" %>
+            <%= f.datetime_field :deadline, class: "form-control", value: Time.current.strftime('%Y-%m-%dT00:00:00') %>
           </div>
           <div class="form-group">
             <%= f.label :capacity, '参加人数定員*' %>
