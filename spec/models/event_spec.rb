@@ -13,6 +13,10 @@ RSpec.describe 'Eventモデルのテスト', type: :model do
         event.name = ''
         is_expected.to eq false
       end
+      it '50文字以下であること: 50文字は〇' do
+        event.name = Faker::Lorem.characters(number: 50)
+        is_expected.to eq true
+      end
       it '50文字以下であること: 51文字は×' do
         event.name = Faker::Lorem.characters(number: 51)
         is_expected.to eq false
