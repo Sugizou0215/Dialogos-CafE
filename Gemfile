@@ -59,6 +59,7 @@ group :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'rspec-rails'
+  gem 'pry-byebug'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -79,7 +80,6 @@ gem 'refile-mini_magick'
 gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 gem 'simple_calendar', '~> 2.0'
-gem 'pry-byebug'
 
 group :production do
   gem 'mysql2'
