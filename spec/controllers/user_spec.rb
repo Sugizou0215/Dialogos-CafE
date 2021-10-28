@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
-  
+
   context 'ログインしている場合' do
     let(:user) { create(:user) }
     let(:another_user) { create(:user) }
@@ -22,9 +22,9 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to have_http_status "200"
       end
     end
-    
+
     describe "users#editのテスト" do
-      
+
       it "users#editが正常に作動しているか" do
         get :edit, params: {id: user.id}
         expect(response).to be_success
@@ -56,20 +56,52 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to user_path(user)
       end
 
-      it "不正な値でグループが更新できないか" do
+      it "不正な値でユーザーが更新できないか" do
         user_params = {name: nil}
         patch :update, params: {id: user.id, user: user_params}
         expect(user.reload.name).to_not eq nil
       end
 
-      it "不正な値でグループが更新しようとすると、再度編集ページに遷移するか" do
+      it "不正な値でユーザーを更新しようとすると、再度編集ページに遷移するか" do
         user_params = {name: nil}
         patch :update, params: {id: user.id, user: user_params}
         expect(response).to redirect_to edit_user_path
       end
     end
+
+    describe "users#confirmのテスト" do
+
+      it "users#confirmが正常に作動しているか" do
+        get :confirm, params: {id: user.id}
+        expect(response).to be_success
+      end
+
+      it "users#confirmへのアクセスに対して正常なレスポンスが返ってきているか" do
+        get :confirm, params: {id: user.id}
+        expect(response).to have_http_status "200"
+      end
+
+      it "ユーザー本人以外が確認ページに遷移できず、グループ詳細ページに遷移しているか" do
+        sign_in another_user
+        get :confirm, params: {id: user.id}
+        expect(response).to redirect_to user_path(another_user)
+      end
+    end
+
+    describe "users#leaveのテスト" do
+
+      it "正常に退会できるか" do
+        put :leave, params: {id: user.id}
+        expect(user.reload.is_valid).to eq false
+      end
+
+      it "正常に退会後、トップページに遷移するか" do
+        put :leave, params: {id: user.id}
+        expect(response).to redirect_to root_path
+      end
+    end
   end
-  
+
   context "ログインしていない場合" do
     let(:user) { create(:user) }
 
@@ -95,6 +127,32 @@ RSpec.describe UsersController, type: :controller do
 
       it "ログイン画面にリダイレクトされているか" do
         get :edit, params: {id: user.id}
+        expect(response).to redirect_to "/users/sign_in"
+      end
+    end
+
+    describe "users#confirmのテスト" do
+
+      it "users#confirmが正常に作動していないか" do
+        get :confirm, params: {id: user.id}
+        expect(response).to_not be_success
+      end
+
+      it "ログイン画面にリダイレクトされているか" do
+        get :confirm, params: {id: user.id}
+        expect(response).to redirect_to "/users/sign_in"
+      end
+    end
+
+    describe "users#leaveのテスト" do
+
+      it "users#leaveが正常に作動していないか" do
+        put :leave, params: {id: user.id}
+        expect(response).to_not be_success
+      end
+
+      it "ログイン画面にリダイレクトされているか" do
+        put :leave, params: {id: user.id}
         expect(response).to redirect_to "/users/sign_in"
       end
     end
