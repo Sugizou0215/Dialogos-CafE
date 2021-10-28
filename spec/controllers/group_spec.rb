@@ -96,7 +96,7 @@ RSpec.describe GroupsController, type: :controller do
             admin_user_id: user.id
           }
         }
-        expect(response).to redirect_to new_group_path
+        expect(response).to render_template :new
       end
     end
 
@@ -144,7 +144,7 @@ RSpec.describe GroupsController, type: :controller do
       it "不正な値でグループが更新しようとすると、再度編集ページに遷移するか" do
         group_params = {name: nil}
         patch :update, params: {id: group.id, group: group_params}
-        expect(response).to redirect_to edit_group_path
+        expect(response).to render_template :edit
       end
     end
   end

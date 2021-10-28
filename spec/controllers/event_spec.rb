@@ -128,7 +128,7 @@ RSpec.describe EventsController, type: :controller do
             tag_name: "タグ"
           }
         }
-        expect(response).to redirect_to new_event_path
+        expect(response).to render_template :new
       end
     end
 
@@ -176,7 +176,7 @@ RSpec.describe EventsController, type: :controller do
       it "不正な値でイベントを更新しようとすると、再度編集ページに遷移するか" do
         event_params = {name: nil, tag_name: "タグ"}
         patch :update, params: {id: event.id, event: event_params}
-        expect(response).to redirect_to edit_event_path
+        expect(response).to render_template :edit
       end
     end
   end

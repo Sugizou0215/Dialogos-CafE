@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :user_image)
   end
 
-  # ログインしているユーザーと編集しようとしているユーザーが一致しないと編集画面に遷移できなくする
+  # ログインしているユーザーと編集しようとしているユーザーが一致しないと編集等をできなくする
   def ensure_correct_user
     @user = User.find(params[:id])
     redirect_to user_path(current_user) unless @user == current_user

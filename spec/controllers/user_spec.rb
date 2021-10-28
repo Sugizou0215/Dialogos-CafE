@@ -65,7 +65,7 @@ RSpec.describe UsersController, type: :controller do
       it "不正な値でユーザーを更新しようとすると、再度編集ページに遷移するか" do
         user_params = {name: nil}
         patch :update, params: {id: user.id, user: user_params}
-        expect(response).to redirect_to edit_user_path
+        expect(response).to render_template :edit
       end
     end
 
