@@ -179,8 +179,28 @@ RSpec.describe EventsController, type: :controller do
         expect(response).to render_template :edit
       end
     end
+
+    describe "events#cancelのテスト" do
+      let(:event) { create(:event, genre_id: genre.id, admin_user_id: user.id) }
+
+      it "正常にイベントを中止できるか" do
+        patch :cancel, params: {id: event.id}
+        expect(event.reload.is_valid).to eq false
+      end
+
+      it "正常にイベントを中止後、中止したeventの詳細ページに遷移するか" do
+        patch :cancel, params: {id: event.id}
+        expect(response).to redirect_to event_path(event)
+      end
+
+      it "イベント作成者以外が中止できず、イベント詳細ページに遷移しているか" do
+        sign_in another_user
+        patch :cancel, params: {id: event.id}
+        expect(response).to redirect_to event_path(event)
+      end
+    end
   end
-  
+
   context "ログインしていない場合" do
     let(:user) { create(:user) }
     let(:genre) { create(:genre) }

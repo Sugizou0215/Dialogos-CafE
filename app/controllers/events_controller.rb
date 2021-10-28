@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: [:index]
-  before_action :ensure_admin_user, only: %i[edit update] # 主催者以外はedit,updateできなくする
+  before_action :ensure_admin_user, only: %i[edit update cancel] # 主催者以外はedit,update,cancelできなくする
 
   def new
     @genres = Genre.all # ジャンル表示用
