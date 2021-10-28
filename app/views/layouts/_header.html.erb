@@ -1,15 +1,13 @@
 <header>
-  <% if current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
+  <% if current_page?(root_path) && user_signed_in? %>
+    <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 bg-dark">
+  <% elsif current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
     <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0">
   <% else %>
     <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 bg-dark">
   <% end %>
     <div class="container-fluid">
-      <% if user_signed_in? %>
-        <%= link_to image_tag('logo1_negate.png', size: "100x85"), user_path(current_user), class: 'navbar-brand' %>
-      <% else %>
-        <a class="navbar-brand" href="/"><span><%= image_tag 'logo1_negate.png', size: "100x85" %></span></a>
-      <% end %>
+      <a class="navbar-brand" href="/"><span><%= image_tag 'logo1_negate.png', size: "100x85" %></span></a>
       <!--ハンバーガーメニュー-->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
