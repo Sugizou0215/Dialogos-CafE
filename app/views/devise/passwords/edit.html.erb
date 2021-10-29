@@ -1,4 +1,7 @@
 <section id="password">
+  <% unless user_signed_in? %>
+    <%= render 'layouts/header' %>
+  <% end %>
   <div class="container pt-5">
     <h2>パスワード再設定</h2>
     <div class="row justify-content-center">
