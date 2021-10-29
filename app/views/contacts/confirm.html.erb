@@ -1,5 +1,7 @@
 <section id="contact" class="bg-light">
-  <%= render 'layouts/error', model: @contact %>
+  <% unless user_signed_in? %>
+    <%= render 'layouts/header' %>
+  <% end %>
   <div class="container">
     <div class="row pt-3">
       <div class="col-12 mx-auto">

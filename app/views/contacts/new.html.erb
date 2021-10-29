@@ -1,8 +1,11 @@
 <section id="contact" class="bg-light">
+  <% unless user_signed_in? %>
+    <%= render 'layouts/header' %>
+  <% end %>
   <%= render 'layouts/error', model: @contact %>
   <div class="container">
     <div class="row pt-3">
-      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <div class="col-sm-12 col-md-8 col-lg-5 p:x-5 px-sm-0 mx-auto">
         <h2 class="text-center">お問い合わせフォーム</h2>
         <%= form_with model:@contact, url: confirm_path, local:true do |f| %>
           <div class="form-group">
