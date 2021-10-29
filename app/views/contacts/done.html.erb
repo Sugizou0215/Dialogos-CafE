@@ -1,4 +1,5 @@
 <section id="contact" class="bg-light">
+  <%= render 'layouts/error', model: @contact %>
   <div class="container pt-5">
     <div class="text-center col-12">
       <div class="col-12">
@@ -8,9 +9,15 @@
         お問い合わせを承りました。<br>
         状況を確認次第、順次メールを差し上げますので、今しばらくお待ちください。<br>
       </div>
-      <div class="col-12 pb-5">
-        <%= link_to "マイページへ", user_path(current_user), class: 'btn btn-primary' %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="col-12 pb-5">
+          <%= link_to "マイページへ", user_path(current_user), class: 'btn btn-primary' %>
+        </div>
+      <% else %>
+        <div class="col-12 pb-5">
+          <%= link_to "トップページへ", root_path, class: 'btn btn-primary' %>
+        </div>
+      <% end %>
     </div>
   </div>
 </section>
