@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError, "No route matches #{params[:unmatched_route]}"
   end
 
-  例外処理
+  # 例外処理
   class Forbidden < ActionController::ActionControllerError; end
 
   class IpAddressRejected < ActionController::ActionControllerError; end
