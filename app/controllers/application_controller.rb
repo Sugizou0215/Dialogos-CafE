@@ -14,33 +14,33 @@ class ApplicationController < ActionController::Base
     raise ActionController::RoutingError, "No route matches #{params[:unmatched_route]}"
   end
 
-  # 例外処理
-  # class Forbidden < ActionController::ActionControllerError; end
+  例外処理
+  class Forbidden < ActionController::ActionControllerError; end
 
-  # class IpAddressRejected < ActionController::ActionControllerError; end
+  class IpAddressRejected < ActionController::ActionControllerError; end
 
-  # rescue_from ActiveRecord::RecordNotFound, with: :rescue404
-  # rescue_from ActionController::RoutingError, with: :rescue404
-  # rescue_from Exception, with: :rescue500
-  # rescue_from Forbidden, with: :rescue403
-  # rescue_from IpAddressRejected, with: :rescue403
+  rescue_from ActiveRecord::RecordNotFound, with: :rescue404
+  rescue_from ActionController::RoutingError, with: :rescue404
+  rescue_from Exception, with: :rescue500
+  rescue_from Forbidden, with: :rescue403
+  rescue_from IpAddressRejected, with: :rescue403
 
-  # private
+  private
 
-  # def rescue404(error)
-  #   @exception = error
-  #   render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
-  # end
+  def rescue404(error)
+    @exception = error
+    render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
+  end
 
-  # def rescue500(error)
-  #   @exception = error
-  #   render file: Rails.root.join('public/500.html'), status: 500, layout: false, content_type: 'text/html'
-  # end
+  def rescue500(error)
+    @exception = error
+    render file: Rails.root.join('public/500.html'), status: 500, layout: false, content_type: 'text/html'
+  end
 
-  # def rescue403(error)
-  #   @exception = error
-  #   render file: Rails.root.join('public/404.html'), status: 403, layout: false, content_type: 'text/html'
-  # end
+  def rescue403(error)
+    @exception = error
+    render file: Rails.root.join('public/404.html'), status: 403, layout: false, content_type: 'text/html'
+  end
 
   protected
 
