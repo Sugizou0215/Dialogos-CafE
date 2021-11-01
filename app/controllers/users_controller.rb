@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:error]
-  before_action :ensure_correct_user, only: %i[edit update leave confirm]
+  before_action :ensure_correct_user, only: %i[edit update]
 
   def show
     @user = User.find(params[:id])
