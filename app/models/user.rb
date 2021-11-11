@@ -96,7 +96,7 @@ class User < ApplicationRecord
   def create_notification_join!(current_user, event_id)
     temp = EventNotice.where(['visiter_id = ? and visited_id = ? and action = ? ', current_user.id, id, 'join'])
     if temp.blank?
-      notification = current_user.active_group_notifications.new(
+      notification = current_user.active_event_notifications.new(
         visited_id: id,
         event_id: event_id,
         action: 'join'
