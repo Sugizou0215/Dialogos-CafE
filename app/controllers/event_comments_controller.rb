@@ -3,13 +3,14 @@ class EventCommentsController < ApplicationController
 
   def create
     @event = Event.find(params[:event_id])
-    @event_comment = current_user.event_comments.new(event_comment_params)
-    @event_comment.event_id = @event.id
-    @comment_event = @event_comment.event
-    if @event_comment.save
+    event_comment = current_user.event_comments.new(event_comment_params)
+    event_comment.event_id = @event.id
+    comment_event = event_comment.event
+    if event_comment.save
       # 通知の作成
-      @comment_event.create_notification_comment!(current_user, @event_comment)
+      comment_event.create_notification_comment!(current_user, event_comment)
     end
+    @event_comment = EventComment.new
   end
 
   def destroy

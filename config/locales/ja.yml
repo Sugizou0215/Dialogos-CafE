@@ -25,7 +25,7 @@ ja:
           email: 返信先メールアドレス
           title: 件名
           email: お問い合わせ内容
-        group:
+        group_new:
           title: タイトル
           body: 本文
 

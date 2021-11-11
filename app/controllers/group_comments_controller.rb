@@ -3,13 +3,14 @@ class GroupCommentsController < ApplicationController
 
   def create
     @group = Group.find(params[:group_id])
-    @group_comment = current_user.group_comments.new(group_comment_params)
-    @group_comment.group_id = @group.id
-    @comment_group = @group_comment.group
-    if @group_comment.save
+    group_comment = current_user.group_comments.new(group_comment_params)
+    group_comment.group_id = @group.id
+    comment_group = group_comment.group
+    if group_comment.save
       # 通知の作成
-      @comment_group.create_notification_comment!(current_user, @group_comment)
+      comment_group.create_notification_comment!(current_user, group_comment)
     end
+    @groupt_comment = GroupComment.new
   end
 
   def destroy
