@@ -1,4 +1,4 @@
-<header>
+<header class="sticky-top">
   <% if current_page?(root_path) && user_signed_in? %>
     <nav class="navbar navbar-expand-lg navbar-dark pt-0 pb-0 bg-dark">
   <% elsif current_page?(root_path) || current_page?(new_user_registration_path) || current_page?(new_user_session_path) || current_page?(homes_about_path) %>
